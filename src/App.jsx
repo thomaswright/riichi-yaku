@@ -523,6 +523,8 @@ const isLimitValue = (value) => value === "L" || value === "2L";
 
 function App() {
   const [showLimits, setShowLimits] = useState(true);
+  const [showHan, setShowHan] = useState(true);
+
   const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
 
   const toggleNameVisibility = (key) => {
@@ -557,14 +559,10 @@ function App() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-slate-100 py-3">
+    <div className="min-h-screen  py-3">
       <main
         className={`mx-auto flex flex-col gap-3 px-3 text-slate-900 ${
-          numNamesActive < 2
-            ? "max-w-4xl"
-            : numNamesActive < 3
-            ? "max-w-5xl"
-            : "max-w-6xl"
+          numNamesActive < 3 ? "max-w-3xl" : "max-w-5xl"
         }`}
       >
         <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
@@ -605,6 +603,20 @@ focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
                   </button>
                 );
               })}
+              <button
+                type="button"
+                onClick={() => setShowHan((prev) => !prev)}
+                aria-pressed={showHan}
+                className={`inline-flex items-center rounded-full border px-3 
+py-1 text-[10px] font-semibold uppercase tracking-wide transition 
+focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+                  showHan
+                    ? "border-amber-300 bg-amber-50 text-amber-700"
+                    : "border-slate-200 bg-white text-slate-500"
+                }`}
+              >
+                {"Han"}
+              </button>
             </div>
             <div className=" flex flex-wrap items-center gap-2">
               <button
@@ -676,16 +688,17 @@ text-slate-500`}
 
                           return (
                             <li key={itemKey} className="">
-                              <div className="flex flex-wrap items-baseline justify-between gap-4">
+                              <div className="flex flex-wrap items-center justify-between gap-3 min-h-6">
                                 {nameChips.length > 0 && (
                                   <div className="flex flex-wrap items-center gap-1.5 flex-1">
                                     {nameChips}
                                   </div>
                                 )}
-
-                                <span className="text-base font-semibold text-blue-600">
-                                  {formatValue(item.value)}
-                                </span>
+                                {showHan && (
+                                  <span className="text-base font-semibold text-amber-600">
+                                    {formatValue(item.value)}
+                                  </span>
+                                )}
                               </div>
 
                               {visibleVariants.length > 0 && (
@@ -698,19 +711,24 @@ text-slate-500`}
                                       );
 
                                       return (
-                                        <li key={variantKey} className="pl-3">
-                                          <div className="flex flex-wrap items-baseline justify-between gap-3">
+                                        <li
+                                          key={variantKey}
+                                          className="pl-3 min-h-6"
+                                        >
+                                          <div className="flex flex-wrap items-center justify-between gap-3">
                                             {variantChips.length > 0 && (
                                               <div className="flex flex-wrap items-center gap-1.5 flex-1 first:italic">
                                                 {variantChips}
                                               </div>
                                             )}
-                                            <span className="text-sm font-semibold text-blue-600">
-                                              {formatValue(
-                                                variant.value,
-                                                variant.bonus
-                                              )}
-                                            </span>
+                                            {showHan && (
+                                              <span className="text-sm font-semibold text-amber-600">
+                                                {formatValue(
+                                                  variant.value,
+                                                  variant.bonus
+                                                )}
+                                              </span>
+                                            )}
                                           </div>
                                         </li>
                                       );
