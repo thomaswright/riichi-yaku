@@ -487,7 +487,7 @@ const NAME_OPTIONS = [
 ];
 
 const INITIAL_VISIBLE_NAMES = NAME_OPTIONS.reduce(
-  (acc, option) => ({ ...acc, [option.key]: true }),
+  (acc, option) => ({ ...acc, [option.key]: false }),
   {}
 );
 
@@ -545,157 +545,171 @@ function App() {
         </span>
       );
     }).filter(Boolean);
+  let numNamesActive = NAME_OPTIONS.filter(
+    (option) => visibleNames[option.key]
+  ).length;
 
   return (
     <div className="min-h-screen bg-slate-100 py-3">
-      <main className="mx-auto flex max-w-5xl flex-col gap-3 px-3 text-slate-900 divide-y divide-slate-300">
-        <div className="flex flex-col gap-3 pb-3">
+      <main className="mx-auto flex max-w-7xl flex-col gap-3 px-3 text-slate-900 ">
+        <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none">
+            <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
               Riichi Mahjong Hand Reference
             </h1>
             <div className="flex flex-wrap items-center gap-2">
+              {NAME_OPTIONS.map((option) => {
+                const isActive = visibleNames[option.key];
+                return (
+                  <button
+                    key={option.key}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => toggleNameVisibility(option.key)}
+                    className={`inline-flex items-center rounded-full border px-3 
+py-1 text-[10px] font-semibold uppercase tracking-wide transition 
+focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+                      isActive
+                        ? option.toggleActiveClass
+                        : option.toggleInactiveClass
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                );
+              })}
+            </div>
+            <div className=" flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => setShowLimits((prev) => !prev)}
                 aria-pressed={showLimits}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
+                className={`inline-flex items-center rounded-full border border-slate-200 
+bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wide 
+text-slate-500`}
               >
                 {showLimits ? "Hide limit hands" : "Show limit hands"}
               </button>
-              <button
-                type="button"
-                onClick={() => setTwoColumn((prev) => !prev)}
-                aria-pressed={twoColumn}
-                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
-              >
-                {twoColumn ? "Use single column" : "Use two columns"}
-              </button>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            {NAME_OPTIONS.map((option) => {
-              const isActive = visibleNames[option.key];
-              return (
-                <button
-                  key={option.key}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => toggleNameVisibility(option.key)}
-                  className={`inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-wide transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
-                    isActive
-                      ? option.toggleActiveClass
-                      : option.toggleInactiveClass
-                  }`}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-          </div>
         </div>
-        {data.map((category) => (
-          <section key={category.name} className="flex flex-col gap-2 pb-3">
-            <h2 className="text-xs font-semibold text-slate-950 leading-none">
-              {category.name}
-            </h2>
-            {category.sections.map((section, sectionIndex) => {
-              const sectionKey = `${category.name}-section-${sectionIndex}`;
-              const sectionItems = section.items.reduce(
-                (acc, item, itemIndex) => {
-                  if (!showLimits && isLimitValue(item.value)) {
+        <div
+          className={`gap-6 ${
+            numNamesActive > 1 ? "md:columns-2" : "sm:columns-2"
+          }`}
+          style={{
+            columnRule: "1px solid #e5e7eb",
+          }}
+        >
+          {data.map((category) => (
+            <>
+              <h2 className="text-xs font-semibold text-slate-950 leading-none mb-2 border-t nth-[1]:border-t-0  pt-3 nth-[1]:pt-0 border-slate-300">
+                {category.name}
+              </h2>
+              {category.sections.map((section, sectionIndex) => {
+                const sectionKey = `${category.name}-section-${sectionIndex}`;
+                const sectionItems = section.items.reduce(
+                  (acc, item, itemIndex) => {
+                    if (!showLimits && isLimitValue(item.value)) {
+                      return acc;
+                    }
+
+                    const itemKey = `${sectionKey}-item-${itemIndex}`;
+                    const visibleVariants = (item.variants ?? []).filter(
+                      (variant) => showLimits || !isLimitValue(variant.value)
+                    );
+
+                    acc.push({ item, itemKey, visibleVariants });
                     return acc;
-                  }
+                  },
+                  []
+                );
 
-                  const itemKey = `${sectionKey}-item-${itemIndex}`;
-                  const visibleVariants = (item.variants ?? []).filter(
-                    (variant) => showLimits || !isLimitValue(variant.value)
-                  );
+                if (sectionItems.length === 0) {
+                  return null;
+                }
 
-                  acc.push({ item, itemKey, visibleVariants });
-                  return acc;
-                },
-                []
-              );
+                return (
+                  <div key={sectionKey} className="flex flex-col gap-1 mb-3">
+                    {section.name && (
+                      <h3
+                        className={`text-sm font-medium text-slate-400 leading-none`}
+                      >
+                        {section.name}
+                      </h3>
+                    )}
+                    <ul className="flex flex-col">
+                      {sectionItems.map(
+                        ({ item, itemKey, visibleVariants }) => {
+                          const nameChips = renderNameChips(item.names);
+                          const notes = [item.description].filter(Boolean);
 
-              if (sectionItems.length === 0) {
-                return null;
-              }
+                          return (
+                            <li key={itemKey} className="">
+                              <div className="flex flex-wrap items-baseline justify-between gap-4">
+                                <span className="text-base font-semibold text-slate-950 flex-1">
+                                  {item.name}
+                                </span>
+                                {nameChips.length > 0 && (
+                                  <div className="flex flex-wrap items-center gap-1.5">
+                                    {nameChips}
+                                  </div>
+                                )}
+                                {notes.length > 0 && (
+                                  <span className="text-xs uppercase tracking-wide text-slate-500">
+                                    {notes.join(" • ")}
+                                  </span>
+                                )}
 
-              return (
-                <div key={sectionKey} className="flex flex-col gap-1">
-                  {section.name && (
-                    <h3 className="text-sm font-medium text-slate-400 leading-none">
-                      {section.name}
-                    </h3>
-                  )}
-                  <ul className="flex flex-col">
-                    {sectionItems.map(({ item, itemKey, visibleVariants }) => {
-                      const nameChips = renderNameChips(item.names);
-                      const notes = [item.description].filter(Boolean);
-
-                      return (
-                        <li key={itemKey} className="">
-                          <div className="flex flex-wrap items-baseline justify-between gap-4">
-                            <span className="text-base font-semibold text-slate-950 flex-1">
-                              {item.name}
-                            </span>
-                            {nameChips.length > 0 && (
-                              <div className="flex flex-wrap items-center gap-1.5">
-                                {nameChips}
+                                <span className="text-base font-semibold text-blue-600">
+                                  {formatValue(item.value)}
+                                </span>
                               </div>
-                            )}
-                            {notes.length > 0 && (
-                              <span className="text-xs uppercase tracking-wide text-slate-500">
-                                {notes.join(" • ")}
-                              </span>
-                            )}
 
-                            <span className="text-base font-semibold text-blue-600">
-                              {formatValue(item.value)}
-                            </span>
-                          </div>
+                              {visibleVariants.length > 0 && (
+                                <ul className="flex flex-col pl-1">
+                                  {visibleVariants.map(
+                                    (variant, variantIndex) => {
+                                      const variantKey = `${itemKey}-variant-${variantIndex}`;
+                                      const variantChips = renderNameChips(
+                                        variant.names
+                                      );
 
-                          {visibleVariants.length > 0 && (
-                            <ul className="flex flex-col pl-1">
-                              {visibleVariants.map((variant, variantIndex) => {
-                                const variantKey = `${itemKey}-variant-${variantIndex}`;
-                                const variantChips = renderNameChips(
-                                  variant.names
-                                );
-
-                                return (
-                                  <li key={variantKey} className="pl-3">
-                                    <div className="flex flex-wrap items-baseline justify-between gap-3">
-                                      <span className="text-sm flex-1 font-medium italic text-slate-800">
-                                        {variant.name}
-                                      </span>
-                                      {variantChips.length > 0 && (
-                                        <div className="flex flex-wrap items-center gap-1.5">
-                                          {variantChips}
-                                        </div>
-                                      )}
-                                      <span className="text-sm font-semibold text-blue-600">
-                                        {formatValue(
-                                          variant.value,
-                                          variant.bonus
-                                        )}
-                                      </span>
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
-          </section>
-        ))}
+                                      return (
+                                        <li key={variantKey} className="pl-3">
+                                          <div className="flex flex-wrap items-baseline justify-between gap-3">
+                                            <span className="text-sm flex-1 font-medium italic text-slate-800">
+                                              {variant.name}
+                                            </span>
+                                            {variantChips.length > 0 && (
+                                              <div className="flex flex-wrap items-center gap-1.5">
+                                                {variantChips}
+                                              </div>
+                                            )}
+                                            <span className="text-sm font-semibold text-blue-600">
+                                              {formatValue(
+                                                variant.value,
+                                                variant.bonus
+                                              )}
+                                            </span>
+                                          </div>
+                                        </li>
+                                      );
+                                    }
+                                  )}
+                                </ul>
+                              )}
+                            </li>
+                          );
+                        }
+                      )}
+                    </ul>
+                  </div>
+                );
+              })}
+            </>
+          ))}
+        </div>
       </main>
     </div>
   );
