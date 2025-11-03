@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import logoUrl from "./assets/logo.svg";
 
 const data = [
   {
@@ -578,11 +579,13 @@ const Header = ({
   onToggleLimits,
 }) => (
   <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
-    <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="flex flex-wrap items-center justify-between gap-1">
+      <img src={logoUrl} width={"20"} />
+
       <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
         Riichi Mahjong Yaku Reference
       </h1>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2 pr-1">
         {NAME_OPTIONS.map((option) => (
           <NameToggleButton
             key={option.key}
