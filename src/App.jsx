@@ -31,7 +31,7 @@ const data = [
               {
                 value: "1",
                 names: {
-                  short: "Declare on first turn",
+                  short: "On first turn",
                   japaneseRomaji: "Daburu Riichi",
                   japanese: "ダブル立直",
                   english: "Double Ready",
@@ -74,7 +74,7 @@ const data = [
           {
             value: "1",
             names: {
-              short: "Only runs, pair is not honors, outside run wait",
+              short: "Only runs, no honors, outside wait",
               japaneseRomaji: "Pinfu",
               japanese: "平和",
               english: "No-points",
@@ -557,7 +557,15 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-100 py-3">
-      <main className="mx-auto flex max-w-7xl flex-col gap-3 px-3 text-slate-900 ">
+      <main
+        className={`mx-auto flex flex-col gap-3 px-3 text-slate-900 ${
+          numNamesActive < 2
+            ? "max-w-4xl"
+            : numNamesActive < 3
+            ? "max-w-5xl"
+            : "max-w-6xl"
+        }`}
+      >
         <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
@@ -613,7 +621,11 @@ text-slate-500`}
         </div>
         <div
           className={`gap-6 ${
-            numNamesActive > 1 ? "md:columns-2" : "sm:columns-2"
+            numNamesActive > 3
+              ? "lg:columns-2"
+              : numNamesActive > 2
+              ? "md:columns-2"
+              : "sm:columns-2"
           }`}
           style={{
             columnRule: "1px solid #e5e7eb",
