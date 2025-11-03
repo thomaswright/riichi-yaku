@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const data = [
   {
     name: "Closed Only Hands",
@@ -320,13 +322,27 @@ const formatValue = (value, isBonus = false) => {
   return value;
 };
 
+const isLimitValue = (value) => value === "L" || value === "2L";
+
 function App() {
+  const [showLimits, setShowLimits] = useState(true);
+
   return (
     <div className="min-h-screen bg-slate-100 py-3">
       <main className="mx-auto flex max-w-5xl flex-col gap-3 px-3 text-slate-900 divide-y divide-slate-300">
-        <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none pb-3">
-          Riichi Mahjong Hand Reference
-        </h1>
+        <div className="flex flex-wrap items-center justify-between gap-3 pb-3">
+          <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none">
+            Riichi Mahjong Hand Reference
+          </h1>
+          <button
+            type="button"
+            onClick={() => setShowLimits((prev) => !prev)}
+            aria-pressed={showLimits}
+            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
+          >
+            {showLimits ? "Hide limit hands" : "Show limit hands"}
+          </button>
+        </div>
         {data.map((category) => (
           <section key={category.name} className="flex flex-col gap-2 pb-3">
             <h2 className="text-xs font-semibold text-slate-950 leading-none">
@@ -334,6 +350,26 @@ function App() {
             </h2>
             {category.sections.map((section, sectionIndex) => {
               const sectionKey = `${category.name}-section-${sectionIndex}`;
+              const sectionItems = section.items.reduce(
+                (acc, item, itemIndex) => {
+                  if (!showLimits && isLimitValue(item.value)) {
+                    return acc;
+                  }
+
+                  const itemKey = `${sectionKey}-item-${itemIndex}`;
+                  const visibleVariants = (item.variants ?? []).filter(
+                    (variant) => showLimits || !isLimitValue(variant.value)
+                  );
+
+                  acc.push({ item, itemKey, visibleVariants });
+                  return acc;
+                },
+                []
+              );
+
+              if (sectionItems.length === 0) {
+                return null;
+              }
 
               return (
                 <div key={sectionKey} className="flex flex-col gap-1">
@@ -343,8 +379,7 @@ function App() {
                     </h3>
                   )}
                   <ul className="flex flex-col">
-                    {section.items.map((item, itemIndex) => {
-                      const itemKey = `${sectionKey}-item-${itemIndex}`;
+                    {sectionItems.map(({ item, itemKey, visibleVariants }) => {
                       const akaText =
                         item.aka && item.aka.length > 0
                           ? `${item.aka.map((n) => '"' + n + '"').join(", ")}`
@@ -354,7 +389,7 @@ function App() {
                       return (
                         <li key={itemKey} className="">
                           <div className="flex flex-wrap items-baseline justify-between gap-4">
-                            <div className="flex-1 flex flex-row flex-wrap gap-2 items-center">
+                            <div className="flex flex-1 flex-row flex-wrap items-center gap-2">
                               <span className="text-base font-semibold text-slate-950">
                                 {item.name}
                               </span>
@@ -370,9 +405,9 @@ function App() {
                             </span>
                           </div>
 
-                          {item.variants && item.variants.length > 0 && (
-                            <ul className=" flex flex-col pl-1">
-                              {item.variants.map((variant, variantIndex) => {
+                          {visibleVariants.length > 0 && (
+                            <ul className="flex flex-col pl-1">
+                              {visibleVariants.map((variant, variantIndex) => {
                                 const variantKey = `${itemKey}-variant-${variantIndex}`;
                                 const variantAkaText =
                                   variant.aka && variant.aka.length > 0
@@ -402,6 +437,11 @@ function App() {
                                         )}
                                       </span>
                                     </div>
+                                    {variantNotes.length > 0 && (
+                                      <p className="text-xs text-slate-500">
+                                        {variantNotes.join(" • ")}
+                                      </p>
+                                    )}
                                   </li>
                                 );
                               })}
