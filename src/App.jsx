@@ -562,192 +562,189 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen  py-3">
-      <main
-        className={`mx-auto flex flex-col gap-3 px-3 text-slate-900 ${
-          numNamesActive < 3 ? "max-w-3xl" : "max-w-5xl"
-        }`}
-      >
-        <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
-              Riichi Mahjong Yaku Reference
-            </h1>
-            <div className="flex flex-wrap items-center gap-2">
-              {NAME_OPTIONS.map((option) => {
-                const isActive = visibleNames[option.key];
-                return (
-                  <button
-                    key={option.key}
-                    type="button"
-                    aria-pressed={isActive}
-                    onClick={() => {
-                      setVisibleNames((prev) => {
-                        return {
-                          ...prev,
-                          [option.key]:
-                            getNumNamesActive(prev) > 1
-                              ? !prev[option.key]
-                              : true,
-                        };
-                      });
-                    }}
-                    className={`inline-flex items-center rounded-full border px-3 
+    <div
+      className={`min-h-screen  mx-auto flex flex-1 flex-col  items-stretch gap-3 p-3 text-slate-900 ${
+        numNamesActive < 3 ? "max-w-3xl" : "max-w-5xl"
+      }`}
+    >
+      <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
+            Riichi Mahjong Yaku Reference
+          </h1>
+          <div className="flex flex-wrap items-center gap-2">
+            {NAME_OPTIONS.map((option) => {
+              const isActive = visibleNames[option.key];
+              return (
+                <button
+                  key={option.key}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => {
+                    setVisibleNames((prev) => {
+                      return {
+                        ...prev,
+                        [option.key]:
+                          getNumNamesActive(prev) > 1
+                            ? !prev[option.key]
+                            : true,
+                      };
+                    });
+                  }}
+                  className={`inline-flex items-center rounded-full border px-3 
                       py-1 text-[10px] font-semibold uppercase tracking-wide transition 
                       focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
                         isActive
                           ? option.toggleActiveClass
                           : option.toggleInactiveClass
                       }`}
-                  >
-                    {option.label}
-                  </button>
-                );
-              })}
-              <button
-                type="button"
-                onClick={() => setShowHan((prev) => !prev)}
-                aria-pressed={showHan}
-                className={`inline-flex items-center rounded-full border px-3 
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => setShowHan((prev) => !prev)}
+              aria-pressed={showHan}
+              className={`inline-flex items-center rounded-full border px-3 
                   py-1 text-[10px] font-semibold uppercase tracking-wide transition 
                   focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
                     showHan
                       ? "border-stone-400 bg-stone-100 text-stone-700"
                       : "border-slate-200 bg-white text-slate-500"
                   }`}
-              >
-                {"Han"}
-              </button>
-            </div>
-            <div className=" flex flex-wrap items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowLimits((prev) => !prev)}
-                aria-pressed={showLimits}
-                className={`inline-flex items-center rounded-full border border-slate-200 
+            >
+              {"Han"}
+            </button>
+          </div>
+          <div className=" flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowLimits((prev) => !prev)}
+              aria-pressed={showLimits}
+              className={`inline-flex items-center rounded-full border border-slate-200 
                 bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500`}
-              >
-                {showLimits ? "Hide limit hands" : "Show limit hands"}
-              </button>
-            </div>
+            >
+              {showLimits ? "Hide limit hands" : "Show limit hands"}
+            </button>
           </div>
         </div>
-        <div
-          className={`gap-6 ${
-            numNamesActive > 3
-              ? "lg:columns-2"
-              : numNamesActive > 2
-              ? "md:columns-2"
-              : "sm:columns-2"
-          }`}
-          style={{
-            columnRule: "1px solid #e5e7eb",
-          }}
-        >
-          {data.map((category) => (
-            <>
-              <h2 className="text-xs font-semibold text-slate-950 leading-none mb-2 border-t nth-[1]:border-t-0  pt-3 nth-[1]:pt-0 border-slate-300">
-                {category.name}
-              </h2>
-              {category.sections.map((section, sectionIndex) => {
-                const sectionKey = `${category.name}-section-${sectionIndex}`;
-                const sectionItems = section.items.reduce(
-                  (acc, item, itemIndex) => {
-                    if (!showLimits && isLimitValue(item.value)) {
-                      return acc;
-                    }
-
-                    const itemKey = `${sectionKey}-item-${itemIndex}`;
-                    const visibleVariants = (item.variants ?? []).filter(
-                      (variant) => showLimits || !isLimitValue(variant.value)
-                    );
-
-                    acc.push({ item, itemKey, visibleVariants });
+      </div>
+      <div
+        className={`gap-6 ${
+          numNamesActive > 3
+            ? "lg:columns-2"
+            : numNamesActive > 2
+            ? "md:columns-2"
+            : "sm:columns-2"
+        }`}
+        style={{
+          columnRule: "1px solid #e5e7eb",
+        }}
+      >
+        {data.map((category) => (
+          <>
+            <h2 className="text-xs font-semibold text-slate-950 leading-none mb-2 border-t nth-[1]:border-t-0  pt-3 nth-[1]:pt-0 border-slate-300">
+              {category.name}
+            </h2>
+            {category.sections.map((section, sectionIndex) => {
+              const sectionKey = `${category.name}-section-${sectionIndex}`;
+              const sectionItems = section.items.reduce(
+                (acc, item, itemIndex) => {
+                  if (!showLimits && isLimitValue(item.value)) {
                     return acc;
-                  },
-                  []
-                );
+                  }
 
-                if (sectionItems.length === 0) {
-                  return null;
-                }
+                  const itemKey = `${sectionKey}-item-${itemIndex}`;
+                  const visibleVariants = (item.variants ?? []).filter(
+                    (variant) => showLimits || !isLimitValue(variant.value)
+                  );
 
-                return (
-                  <div key={sectionKey} className="flex flex-col gap-1 mb-3">
-                    {section.name && (
-                      <h3
-                        className={`text-sm font-medium text-slate-400 leading-none`}
-                      >
-                        {section.name}
-                      </h3>
-                    )}
-                    <ul className="flex flex-col">
-                      {sectionItems.map(
-                        ({ item, itemKey, visibleVariants }) => {
-                          const nameChips = renderNameChips(item.names);
+                  acc.push({ item, itemKey, visibleVariants });
+                  return acc;
+                },
+                []
+              );
 
-                          return (
-                            <li key={itemKey} className="">
-                              <div className="flex flex-wrap items-center justify-between gap-1 min-h-6">
-                                {nameChips.length > 0 && (
-                                  <div className="flex flex-wrap items-center gap-1.5 flex-1">
-                                    {nameChips}
-                                  </div>
-                                )}
-                                {showHan && (
-                                  <span className="text-base font-semibold text-stone-600  w-4 text-right">
-                                    {formatValue(item.value)}
-                                  </span>
-                                )}
+              if (sectionItems.length === 0) {
+                return null;
+              }
+
+              return (
+                <div key={sectionKey} className="flex flex-col gap-1 mb-3">
+                  {section.name && (
+                    <h3
+                      className={`text-sm font-medium text-slate-400 leading-none`}
+                    >
+                      {section.name}
+                    </h3>
+                  )}
+                  <ul className="flex flex-col">
+                    {sectionItems.map(({ item, itemKey, visibleVariants }) => {
+                      const nameChips = renderNameChips(item.names);
+
+                      return (
+                        <li key={itemKey} className="">
+                          <div className="flex flex-wrap items-center justify-between gap-1 min-h-6">
+                            {nameChips.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-1.5 flex-1">
+                                {nameChips}
                               </div>
+                            )}
+                            {showHan && (
+                              <span className="text-base font-semibold text-stone-600  w-4 text-right">
+                                {formatValue(item.value)}
+                              </span>
+                            )}
+                          </div>
 
-                              {visibleVariants.length > 0 && (
-                                <ul className="flex flex-col pl-1">
-                                  {visibleVariants.map(
-                                    (variant, variantIndex) => {
-                                      const variantKey = `${itemKey}-variant-${variantIndex}`;
-                                      const variantChips = renderNameChips(
-                                        variant.names
-                                      );
+                          {visibleVariants.length > 0 && (
+                            <ul className="flex flex-col pl-1">
+                              {visibleVariants.map((variant, variantIndex) => {
+                                const variantKey = `${itemKey}-variant-${variantIndex}`;
+                                const variantChips = renderNameChips(
+                                  variant.names
+                                );
 
-                                      return (
-                                        <li
-                                          key={variantKey}
-                                          className="pl-3 min-h-6"
-                                        >
-                                          <div className="flex flex-wrap items-center justify-between gap-1">
-                                            {variantChips.length > 0 && (
-                                              <div className="flex flex-wrap items-center gap-1.5 flex-1 first:italic">
-                                                {variantChips}
-                                              </div>
-                                            )}
-                                            {showHan && (
-                                              <span className="text-sm font-semibold text-stone-600 w-4 text-right">
-                                                {formatValue(
-                                                  variant.value,
-                                                  variant.bonus
-                                                )}
-                                              </span>
-                                            )}
-                                          </div>
-                                        </li>
-                                      );
-                                    }
-                                  )}
-                                </ul>
-                              )}
-                            </li>
-                          );
-                        }
-                      )}
-                    </ul>
-                  </div>
-                );
-              })}
-            </>
-          ))}
-        </div>
-      </main>
+                                return (
+                                  <li key={variantKey} className="pl-3 min-h-6">
+                                    <div className="flex flex-wrap items-center justify-between gap-1">
+                                      {variantChips.length > 0 && (
+                                        <div className="flex flex-wrap items-center gap-1.5 flex-1 first:italic">
+                                          {variantChips}
+                                        </div>
+                                      )}
+                                      {showHan && (
+                                        <span className="text-sm font-semibold text-stone-600 w-4 text-right">
+                                          {formatValue(
+                                            variant.value,
+                                            variant.bonus
+                                          )}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </>
+        ))}
+      </div>
+      <div className="mt-auto text-slate-500 text-xs  py-3 font-bold">
+        {"By "}
+        <a className=" " href={"https://github.com/thomaswright/riichi-yaku"}>
+          {"Thomas Wright"}
+        </a>
+      </div>
     </div>
   );
 }
