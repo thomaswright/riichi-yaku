@@ -423,6 +423,7 @@ const data = [
               short: "Only 1, 9, and honor discards, none called",
               japaneseRomaji: "Nagashi Mangan",
               japanese: "流し満貫",
+              english: "Nagashi Mangan",
             },
             description: null,
           },
@@ -545,7 +546,7 @@ function App() {
       return (
         <span
           key={option.key}
-          className={`rounded-full px-1 text-xs font-semibold tracking-wide nth-[1]:flex-1 nth-[1]:font-semibold nth-[1]:text-base ${option.chipClass}`}
+          className={`rounded-full text-xs font-semibold tracking-wide nth-[1]:flex-1 nth-[1]:font-semibold nth-[1]:text-sm ${option.chipClass}`}
         >
           {value}
         </span>
@@ -672,7 +673,6 @@ text-slate-500`}
                       {sectionItems.map(
                         ({ item, itemKey, visibleVariants }) => {
                           const nameChips = renderNameChips(item.names);
-                          const notes = [item.description].filter(Boolean);
 
                           return (
                             <li key={itemKey} className="">
@@ -681,11 +681,6 @@ text-slate-500`}
                                   <div className="flex flex-wrap items-center gap-1.5 flex-1">
                                     {nameChips}
                                   </div>
-                                )}
-                                {notes.length > 0 && (
-                                  <span className="text-xs uppercase tracking-wide text-slate-500">
-                                    {notes.join(" • ")}
-                                  </span>
                                 )}
 
                                 <span className="text-base font-semibold text-blue-600">
