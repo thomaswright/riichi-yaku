@@ -611,7 +611,7 @@ focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
 py-1 text-[10px] font-semibold uppercase tracking-wide transition 
 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
                   showHan
-                    ? "border-amber-300 bg-amber-50 text-amber-700"
+                    ? "border-stone-400 bg-stone-100 text-stone-700"
                     : "border-slate-200 bg-white text-slate-500"
                 }`}
               >
@@ -688,14 +688,14 @@ text-slate-500`}
 
                           return (
                             <li key={itemKey} className="">
-                              <div className="flex flex-wrap items-center justify-between gap-3 min-h-6">
+                              <div className="flex flex-wrap items-center justify-between gap-1 min-h-6">
                                 {nameChips.length > 0 && (
                                   <div className="flex flex-wrap items-center gap-1.5 flex-1">
                                     {nameChips}
                                   </div>
                                 )}
                                 {showHan && (
-                                  <span className="text-base font-semibold text-amber-600">
+                                  <span className="text-base font-semibold text-stone-600  w-4 text-right">
                                     {formatValue(item.value)}
                                   </span>
                                 )}
@@ -715,14 +715,14 @@ text-slate-500`}
                                           key={variantKey}
                                           className="pl-3 min-h-6"
                                         >
-                                          <div className="flex flex-wrap items-center justify-between gap-3">
+                                          <div className="flex flex-wrap items-center justify-between gap-1">
                                             {variantChips.length > 0 && (
                                               <div className="flex flex-wrap items-center gap-1.5 flex-1 first:italic">
                                                 {variantChips}
                                               </div>
                                             )}
                                             {showHan && (
-                                              <span className="text-sm font-semibold text-amber-600">
+                                              <span className="text-sm font-semibold text-stone-600 w-4 text-right">
                                                 {formatValue(
                                                   variant.value,
                                                   variant.bonus
