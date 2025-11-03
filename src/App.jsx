@@ -1,34 +1,410 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const data = [
+  {
+    name: 'Closed Hands Only',
+    sections: [
+      {
+        name: null,
+        items: [
+          {
+            name: 'Declare riichi',
+            value: '1',
+            aka: [],
+            description: null,
+            variants: [
+              {
+                name: 'Win before next discard',
+                value: '1',
+                aka: [],
+                description: null,
+                bonus: true,
+              },
+              {
+                name: 'Declare on first turn',
+                value: '1',
+                aka: [],
+                description: null,
+                bonus: true,
+              },
+            ],
+          },
+          {
+            name: 'Draw the winning tile',
+            value: '1',
+            aka: ['Tsumo'],
+            description: null,
+          },
+          {
+            name: '2 same runs same suit',
+            value: '1',
+            aka: [],
+            description: null,
+            variants: [
+              {
+                name: 'Double of 2 same runs same suit',
+                value: '3',
+                aka: [],
+                description: null,
+              },
+            ],
+          },
+          {
+            name:
+              'Only runs, pair is not honors, must win with outside run wait',
+            value: '1',
+            aka: ['Pinfu'],
+            description: null,
+          },
+          {
+            name: 'Win on first draw (dealer only)',
+            value: 'L',
+            aka: [],
+            description: 'Dealer only',
+          },
+          {
+            name: 'Win on first hand',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Win on call of first turn',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Open or Closed Hands',
+    sections: [
+      {
+        name: 'Simples & Ends',
+        items: [
+          {
+            name: 'All simples',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All groups contain ends or honors',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All groups contain ends',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All ends and honors',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All ends',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All honors',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+        ],
+      },
+      {
+        name: 'Sets',
+        items: [
+          {
+            name: '4 sets',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+          {
+            name: '3 concealed sets',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+          {
+            name: '4 concealed sets',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+          {
+            name: '3 quads',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+          {
+            name: '4 quads',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+        ],
+      },
+      {
+        name: 'Value Honor Sets',
+        items: [
+          {
+            name: '1 value honor set',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: '2 sets, 1 pair, of each dragon',
+            value: '2',
+            aka: ['3 lil dragons'],
+            description: null,
+          },
+          {
+            name: '3 sets of each dragon',
+            value: 'L',
+            aka: ['3 big dragons'],
+            description: null,
+          },
+          {
+            name: '3 sets, 1 pair, of each wind',
+            value: 'L',
+            aka: ['4 lil winds'],
+            description: null,
+          },
+          {
+            name: '4 sets of each wind',
+            value: '2L',
+            aka: ['4 big winds'],
+            description: null,
+          },
+        ],
+      },
+      {
+        name: 'One Suit',
+        items: [
+          {
+            name: 'All one suit and honors',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All one suit',
+            value: '5',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'All green',
+            value: 'L',
+            aka: [],
+            description: null,
+          },
+          {
+            name: '11 123 456 789 99 + 1 dup, one suit',
+            value: 'L',
+            aka: ['Nine gates'],
+            description: null,
+          },
+        ],
+      },
+      {
+        name: 'Other',
+        items: [
+          {
+            name: '123 456 789 same suit',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Same 3 runs each suit',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Same 3 sets each suit',
+            value: '2',
+            aka: [],
+            description: null,
+          },
+        ],
+      },
+      {
+        name: 'Special Criteria',
+        items: [
+          {
+            name: 'Win on last draw',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Win by calling last discard',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Win on draw after own quad',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Win by calling another\'s quad',
+            value: '1',
+            aka: [],
+            description: null,
+          },
+          {
+            name: 'Win with only end and honor discards, none called',
+            value: '5',
+            aka: [],
+            description: null,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: 'Oddball Hands',
+    sections: [
+      {
+        name: null,
+        items: [
+          {
+            name: '7 pairs (closed only)',
+            value: '2',
+            aka: [],
+            description: 'Closed only',
+          },
+          {
+            name: 'Each terminal, wind, and dragon',
+            value: 'L',
+            aka: ['13 orphans'],
+            description: null,
+          },
+        ],
+      },
+    ],
+  },
+]
 
+const valueLabels = {
+  L: 'Limit (yakuman)',
+  '2L': 'Double limit (yakuman)',
+}
+
+const formatValue = (value, isBonus = false) => {
+  const label = valueLabels[value]
+  if (label) {
+    return label
+  }
+
+  const numericValue = Number(value)
+  if (!Number.isNaN(numericValue)) {
+    const prefix = isBonus ? '+' : ''
+    return `${prefix}${numericValue} han`
+  }
+
+  return value
+}
+
+function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main className="app">
+      <h1>Riichi Mahjong Hand Reference</h1>
+      {data.map((category) => (
+        <section key={category.name} className="category">
+          <h2>{category.name}</h2>
+          {category.sections.map((section, sectionIndex) => {
+            const sectionKey = `${category.name}-section-${sectionIndex}`
+            const sectionName = section.name ?? 'General'
+
+            return (
+              <div key={sectionKey} className="section">
+                {section.name && <h3>{section.name}</h3>}
+                <ul className="hand-list">
+                  {section.items.map((item, itemIndex) => {
+                    const itemKey = `${sectionKey}-item-${itemIndex}`
+                    const akaText =
+                      item.aka && item.aka.length > 0
+                        ? `Also called ${item.aka.join(', ')}`
+                        : null
+                    const notes = [akaText, item.description].filter(Boolean)
+
+                    return (
+                      <li key={itemKey} className="hand-item">
+                        <div className="hand-header">
+                          <span className="hand-name">{item.name}</span>
+                          <span className="hand-value">
+                            {formatValue(item.value)}
+                          </span>
+                        </div>
+                        {notes.length > 0 && (
+                          <p className="hand-notes">{notes.join(' • ')}</p>
+                        )}
+                        {item.variants && item.variants.length > 0 && (
+                          <ul className="variant-list">
+                            {item.variants.map((variant, variantIndex) => {
+                              const variantKey = `${itemKey}-variant-${variantIndex}`
+                              const variantAkaText =
+                                variant.aka && variant.aka.length > 0
+                                  ? `Also called ${variant.aka.join(', ')}`
+                                  : null
+                              const variantNotes = [
+                                variant.description,
+                                variant.bonus
+                                  ? `Bonus for ${item.name}`
+                                  : `Variation of ${item.name}`,
+                                variantAkaText,
+                              ].filter(Boolean)
+
+                              return (
+                                <li key={variantKey} className="variant-item">
+                                  <div className="variant-header">
+                                    <span className="variant-name">
+                                      {variant.name}
+                                    </span>
+                                    <span className="hand-value">
+                                      {formatValue(variant.value, variant.bonus)}
+                                    </span>
+                                  </div>
+                                  {variantNotes.length > 0 && (
+                                    <p className="hand-notes">
+                                      {variantNotes.join(' • ')}
+                                    </p>
+                                  )}
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        )}
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )
+          })}
+        </section>
+      ))}
+    </main>
   )
 }
 
