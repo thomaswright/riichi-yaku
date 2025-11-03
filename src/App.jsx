@@ -301,8 +301,8 @@ const data = [
 ];
 
 const valueLabels = {
-  L: "Limit",
-  "2L": "Double limit",
+  L: "L",
+  "2L": "2L",
 };
 
 const formatValue = (value, isBonus = false) => {
@@ -314,7 +314,7 @@ const formatValue = (value, isBonus = false) => {
   const numericValue = Number(value);
   if (!Number.isNaN(numericValue)) {
     const prefix = isBonus ? "+" : "";
-    return `${prefix}${numericValue} han`;
+    return `${prefix}${numericValue}`;
   }
 
   return value;
@@ -322,23 +322,23 @@ const formatValue = (value, isBonus = false) => {
 
 function App() {
   return (
-    <div className="min-h-screen bg-slate-100 py-6">
-      <main className="mx-auto flex max-w-5xl flex-col gap-8 px-3 text-slate-900">
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-950">
+    <div className="min-h-screen bg-slate-100 py-3">
+      <main className="mx-auto flex max-w-5xl flex-col gap-3 px-3 text-slate-900 divide-y divide-slate-300">
+        <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none pb-3">
           Riichi Mahjong Hand Reference
         </h1>
         {data.map((category) => (
-          <section key={category.name} className="flex flex-col gap-5 ">
-            <h2 className="text-2xl font-semibold text-slate-950 leading-none">
+          <section key={category.name} className="flex flex-col gap-2 pb-3">
+            <h2 className="text-xs font-semibold text-slate-950 leading-none">
               {category.name}
             </h2>
             {category.sections.map((section, sectionIndex) => {
               const sectionKey = `${category.name}-section-${sectionIndex}`;
 
               return (
-                <div key={sectionKey} className="flex flex-col gap-3">
+                <div key={sectionKey} className="flex flex-col gap-1">
                   {section.name && (
-                    <h3 className="text-lg font-medium text-slate-800 leading-none">
+                    <h3 className="text-sm font-medium text-slate-400 leading-none">
                       {section.name}
                     </h3>
                   )}
@@ -352,9 +352,9 @@ function App() {
                       const notes = [akaText, item.description].filter(Boolean);
 
                       return (
-                        <li key={itemKey} className="pl-3">
+                        <li key={itemKey} className="">
                           <div className="flex flex-wrap items-baseline justify-between gap-4">
-                            <div className="flex flex-row flex-wrap gap-2 items-center">
+                            <div className="flex-1 flex flex-row flex-wrap gap-2 items-center">
                               <span className="text-base font-semibold text-slate-950">
                                 {item.name}
                               </span>
