@@ -599,7 +599,7 @@ const Header = ({
             py-1 text-[10px] font-semibold uppercase tracking-wide transition 
             focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
               showHan
-                ? "border-stone-400 bg-stone-100 text-stone-700"
+                ? "border-slate-400 bg-slate-100 text-slate-700"
                 : "border-slate-200 bg-white text-slate-500"
             }`}
         >
@@ -640,7 +640,7 @@ const VariantItem = ({ variant, showHan, visibleNames, numNamesActive }) => (
         className="flex flex-wrap items-center gap-1.5 flex-1 first:italic"
       />
       {showHan && (
-        <span className="text-sm font-semibold text-stone-600 w-4 text-right">
+        <span className="text-sm font-semibold text-slate-600 w-4 text-right">
           {formatValue(variant.value, variant.bonus)}
         </span>
       )}
@@ -665,7 +665,7 @@ const SectionItem = ({
         className="flex flex-wrap items-center gap-1.5 flex-1"
       />
       {showHan && (
-        <span className="text-base font-semibold text-stone-600  w-4 text-right">
+        <span className="text-base font-semibold text-slate-600  w-4 text-right">
           {formatValue(item.value)}
         </span>
       )}
