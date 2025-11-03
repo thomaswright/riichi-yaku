@@ -13,6 +13,7 @@ const data = [
             names: {
               japaneseRomaji: "Riichi",
               japanese: "立直",
+              english: "Ready",
             },
             description: null,
             variants: [
@@ -22,6 +23,7 @@ const data = [
                 names: {
                   japaneseRomaji: "Ippatsu",
                   japanese: "一発",
+                  english: "One-shot",
                 },
                 description: null,
                 bonus: true,
@@ -32,6 +34,7 @@ const data = [
                 names: {
                   japaneseRomaji: "Daburu Riichi",
                   japanese: "ダブル立直",
+                  english: "Double Ready",
                 },
                 description: null,
                 bonus: true,
@@ -42,35 +45,39 @@ const data = [
             name: "Draw the winning tile",
             value: "1",
             names: {
-              japaneseRomaji: "Menzen Tsumo",
+              japaneseRomaji: "Tsumo",
               japanese: "門前清自摸和",
+              english: "Self Draw",
             },
             description: null,
           },
           {
-            name: "2 same runs same suit",
+            name: "Twin runs",
             value: "1",
             names: {
               japaneseRomaji: "Iipeikou",
               japanese: "一盃口",
+              english: null,
             },
             description: null,
           },
           {
-            name: "Double of 2 same runs same suit",
+            name: "Double twin runs",
             value: "3",
             names: {
               japaneseRomaji: "Ryanpeikou",
               japanese: "二盃口",
+              english: null,
             },
             description: null,
           },
           {
-            name: "Only runs, pair is not honors, must win with outside run wait",
+            name: "Only runs, pair is not honors, outside run wait",
             value: "1",
             names: {
               japaneseRomaji: "Pinfu",
               japanese: "平和",
+              english: "No-points",
             },
             description: null,
           },
@@ -80,6 +87,7 @@ const data = [
             names: {
               japaneseRomaji: "Tenhou",
               japanese: "天和",
+              english: "Blessing of Heaven",
             },
             description: null,
           },
@@ -89,6 +97,7 @@ const data = [
             names: {
               japaneseRomaji: "Chiihou",
               japanese: "地和",
+              english: "Blessing of Earth",
             },
             description: null,
           },
@@ -98,6 +107,7 @@ const data = [
             names: {
               japaneseRomaji: "Renhou",
               japanese: "人和",
+              english: "Blessing of Man",
             },
             description: null,
           },
@@ -112,47 +122,52 @@ const data = [
         name: "Simples & Ends",
         items: [
           {
-            name: "All simples",
+            name: "All 2 - 8",
             value: "1",
             names: {
               japaneseRomaji: "Tanyao",
               japanese: "断么九",
+              english: "All Simples",
             },
             description: null,
           },
           {
-            name: "All groups contain ends or honors",
+            name: "All contain 1, 9, or honors",
             value: "1",
             names: {
               japaneseRomaji: "Chanta",
               japanese: "混全帯么九",
+              english: "Common Ends",
             },
             description: null,
           },
           {
-            name: "All groups contain ends",
+            name: "All contain 1 or 9",
             value: "2",
             names: {
               japaneseRomaji: "Junchan",
               japanese: "純全帯么九",
+              english: "Perfect Ends",
             },
             description: null,
           },
           {
-            name: "All ends and honors",
+            name: "All 1, 9, or honors",
             value: "2",
             names: {
               japaneseRomaji: "Honroutou",
               japanese: "混老頭",
+              english: "Common Terminals",
             },
             description: null,
           },
           {
-            name: "All ends",
+            name: "All 1 and 9",
             value: "L",
             names: {
               japaneseRomaji: "Chinroutou",
               japanese: "清老頭",
+              english: "Perfect Terminals",
             },
             description: null,
           },
@@ -162,6 +177,7 @@ const data = [
             names: {
               japaneseRomaji: "Tsuuiisou",
               japanese: "字一色",
+              english: null,
             },
             description: null,
           },
@@ -176,6 +192,7 @@ const data = [
             names: {
               japaneseRomaji: "Toitoi",
               japanese: "対々和",
+              english: null,
             },
             description: null,
           },
@@ -194,6 +211,7 @@ const data = [
             names: {
               japaneseRomaji: "Suankou",
               japanese: "四暗刻",
+              english: null,
             },
             description: null,
           },
@@ -203,6 +221,7 @@ const data = [
             names: {
               japaneseRomaji: "Sankantsu",
               japanese: "三槓子",
+              english: null,
             },
             description: null,
           },
@@ -212,6 +231,7 @@ const data = [
             names: {
               japaneseRomaji: "Sukantsu",
               japanese: "四槓子",
+              english: null,
             },
             description: null,
           },
@@ -226,6 +246,7 @@ const data = [
             names: {
               japaneseRomaji: "Yakuhai",
               japanese: "役牌",
+              english: "Value Triplet",
             },
             description: null,
           },
@@ -233,7 +254,7 @@ const data = [
             name: "2 sets, 1 pair, of each dragon",
             value: "2",
             names: {
-              english: "3 lil dragons",
+              english: "Little Dragons",
               japaneseRomaji: "Shousangen",
               japanese: "小三元",
             },
@@ -243,7 +264,7 @@ const data = [
             name: "3 sets of each dragon",
             value: "L",
             names: {
-              english: "3 big dragons",
+              english: "Big Dragons",
               japaneseRomaji: "Daisangen",
               japanese: "大三元",
             },
@@ -253,7 +274,7 @@ const data = [
             name: "3 sets, 1 pair, of each wind",
             value: "L",
             names: {
-              english: "4 lil winds",
+              english: "Little Winds",
               japaneseRomaji: "Shousuushii",
               japanese: "小四喜",
             },
@@ -263,7 +284,7 @@ const data = [
             name: "4 sets of each wind",
             value: "2L",
             names: {
-              english: "4 big winds",
+              english: "Big Winds",
               japaneseRomaji: "Daisuushii",
               japanese: "大四喜",
             },
@@ -280,6 +301,7 @@ const data = [
             names: {
               japaneseRomaji: "Honitsu",
               japanese: "混一色",
+              english: "Common Flush",
             },
             description: null,
           },
@@ -289,6 +311,7 @@ const data = [
             names: {
               japaneseRomaji: "Chinitsu",
               japanese: "清一色",
+              english: "Perfect Flush",
             },
             description: null,
           },
@@ -298,6 +321,7 @@ const data = [
             names: {
               japaneseRomaji: "Ryuuiisou",
               japanese: "緑一色",
+              english: null,
             },
             description: null,
           },
@@ -305,7 +329,7 @@ const data = [
             name: "11 123 456 789 99 + 1 dup, one suit",
             value: "L",
             names: {
-              english: "Nine gates",
+              english: "Nine Gates",
               japaneseRomaji: "Chuuren Poutou",
               japanese: "九蓮宝燈",
             },
@@ -322,24 +346,27 @@ const data = [
             names: {
               japaneseRomaji: "Ittsu",
               japanese: "一気通貫",
+              english: "Full Straight",
             },
             description: null,
           },
           {
-            name: "Same 3 runs each suit",
+            name: "Same run each suit",
             value: "1",
             names: {
               japaneseRomaji: "Sanshoku Doujun",
               japanese: "三色同順",
+              english: "Mixed Sequences",
             },
             description: null,
           },
           {
-            name: "Same 3 sets each suit",
+            name: "Same set each suit",
             value: "2",
             names: {
               japaneseRomaji: "Sanshoku Doukou",
               japanese: "三色同刻",
+              english: "Mixed Triplets",
             },
             description: null,
           },
@@ -354,6 +381,7 @@ const data = [
             names: {
               japaneseRomaji: "Haitei Raoyue",
               japanese: "海底撈月",
+              english: "Under the Sea",
             },
             description: null,
           },
@@ -363,6 +391,7 @@ const data = [
             names: {
               japaneseRomaji: "Houtei Raoyui",
               japanese: "河底撈魚",
+              english: "Under the River",
             },
             description: null,
           },
@@ -372,6 +401,7 @@ const data = [
             names: {
               japaneseRomaji: "Rinshan Kaihou",
               japanese: "嶺上開花",
+              english: "After a Quad",
             },
             description: null,
           },
@@ -381,6 +411,7 @@ const data = [
             names: {
               japaneseRomaji: "Chankan",
               japanese: "搶槓",
+              english: "Robbing a Quad",
             },
             description: null,
           },
@@ -398,7 +429,7 @@ const data = [
     ],
   },
   {
-    name: "Oddball Hands",
+    name: "Exception Hands",
     sections: [
       {
         name: null,
@@ -409,6 +440,7 @@ const data = [
             names: {
               japaneseRomaji: "Chiitoitsu",
               japanese: "七対子",
+              english: "Seven Pairs",
             },
             description: null,
           },
@@ -416,7 +448,7 @@ const data = [
             name: "Each end, wind, and dragon",
             value: "L",
             names: {
-              english: "13 orphans",
+              english: "Thirteen orphans",
               japaneseRomaji: "Kokushi Musou",
               japanese: "国士無双",
             },
