@@ -57,7 +57,7 @@ const data = [
             names: {
               japaneseRomaji: "Iipeikou",
               japanese: "一盃口",
-              english: null,
+              english: "Double Straights",
             },
             description: null,
           },
@@ -67,7 +67,7 @@ const data = [
             names: {
               japaneseRomaji: "Ryanpeikou",
               japanese: "二盃口",
-              english: null,
+              english: "Two Double Straights",
             },
             description: null,
           },
@@ -177,7 +177,7 @@ const data = [
             names: {
               japaneseRomaji: "Tsuuiisou",
               japanese: "字一色",
-              english: null,
+              english: "All Honors",
             },
             description: null,
           },
@@ -192,7 +192,7 @@ const data = [
             names: {
               japaneseRomaji: "Toitoi",
               japanese: "対々和",
-              english: null,
+              english: "All Triplets",
             },
             description: null,
           },
@@ -202,6 +202,7 @@ const data = [
             names: {
               japaneseRomaji: "Sanankou",
               japanese: "三暗刻",
+              english: "Three Concealed Triplets",
             },
             description: null,
           },
@@ -212,6 +213,7 @@ const data = [
               japaneseRomaji: "Suankou",
               japanese: "四暗刻",
               english: null,
+              english: "Four Concealed Triplets",
             },
             description: null,
           },
@@ -221,7 +223,7 @@ const data = [
             names: {
               japaneseRomaji: "Sankantsu",
               japanese: "三槓子",
-              english: null,
+              english: "Three Quads",
             },
             description: null,
           },
@@ -231,7 +233,7 @@ const data = [
             names: {
               japaneseRomaji: "Sukantsu",
               japanese: "四槓子",
-              english: null,
+              english: "Four Quads",
             },
             description: null,
           },
@@ -251,7 +253,7 @@ const data = [
             description: null,
           },
           {
-            name: "2 sets, 1 pair, of each dragon",
+            name: "2 sets & pair each dragon",
             value: "2",
             names: {
               english: "Little Dragons",
@@ -261,7 +263,7 @@ const data = [
             description: null,
           },
           {
-            name: "3 sets of each dragon",
+            name: "3 sets each dragon",
             value: "L",
             names: {
               english: "Big Dragons",
@@ -271,7 +273,7 @@ const data = [
             description: null,
           },
           {
-            name: "3 sets, 1 pair, of each wind",
+            name: "3 sets & pair each wind",
             value: "L",
             names: {
               english: "Little Winds",
@@ -281,7 +283,7 @@ const data = [
             description: null,
           },
           {
-            name: "4 sets of each wind",
+            name: "4 sets each wind",
             value: "2L",
             names: {
               english: "Big Winds",
@@ -296,7 +298,7 @@ const data = [
         name: "One Suit",
         items: [
           {
-            name: "All one suit and honors",
+            name: "All one suit or honors",
             value: "2",
             names: {
               japaneseRomaji: "Honitsu",
@@ -321,12 +323,12 @@ const data = [
             names: {
               japaneseRomaji: "Ryuuiisou",
               japanese: "緑一色",
-              english: null,
+              english: "All Green",
             },
             description: null,
           },
           {
-            name: "11 123 456 789 99 + 1 dup, one suit",
+            name: "11 123 456 789 99 + dup one suit",
             value: "L",
             names: {
               english: "Nine Gates",
@@ -356,7 +358,7 @@ const data = [
             names: {
               japaneseRomaji: "Sanshoku Doujun",
               japanese: "三色同順",
-              english: "Mixed Sequences",
+              english: "Mixed Straights",
             },
             description: null,
           },
@@ -376,7 +378,7 @@ const data = [
         name: "Special Criteria",
         items: [
           {
-            name: "Win on last draw",
+            name: "Last draw",
             value: "1",
             names: {
               japaneseRomaji: "Haitei Raoyue",
@@ -386,7 +388,7 @@ const data = [
             description: null,
           },
           {
-            name: "Win by calling last discard",
+            name: "Call last discard",
             value: "1",
             names: {
               japaneseRomaji: "Houtei Raoyui",
@@ -396,7 +398,7 @@ const data = [
             description: null,
           },
           {
-            name: "Win on draw after own quad",
+            name: "Draw after own quad",
             value: "1",
             names: {
               japaneseRomaji: "Rinshan Kaihou",
@@ -406,7 +408,7 @@ const data = [
             description: null,
           },
           {
-            name: "Win by calling another's quad",
+            name: "Call another's quad",
             value: "1",
             names: {
               japaneseRomaji: "Chankan",
@@ -416,7 +418,7 @@ const data = [
             description: null,
           },
           {
-            name: "Win with only end and honor discards, none called",
+            name: "Only 1, 9, and honor discards, none called",
             value: "5",
             names: {
               japaneseRomaji: "Nagashi Mangan",
@@ -445,10 +447,10 @@ const data = [
             description: null,
           },
           {
-            name: "Each end, wind, and dragon",
+            name: "Each 1, 9, wind, and dragon + dup",
             value: "L",
             names: {
-              english: "Thirteen orphans",
+              english: "Thirteen Orphans",
               japaneseRomaji: "Kokushi Musou",
               japanese: "国士無双",
             },
