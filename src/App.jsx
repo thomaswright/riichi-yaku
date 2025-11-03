@@ -85,7 +85,7 @@ const data = [
               japaneseRomaji: "Tenhou",
               japanese: "天和",
             },
-            description: "Dealer only",
+            description: null,
           },
           {
             name: "Win on first hand",
@@ -414,7 +414,7 @@ const data = [
               japaneseRomaji: "Chiitoitsu",
               japanese: "七対子",
             },
-            description: "Closed only",
+            description: null,
           },
           {
             name: "Each terminal, wind, and dragon",
@@ -431,6 +431,35 @@ const data = [
     ],
   },
 ];
+
+const NAME_OPTIONS = [
+  {
+    key: "english",
+    label: "English",
+    chipClass: "text-emerald-700",
+    toggleActiveClass: "border-emerald-300 bg-emerald-50 text-emerald-700",
+    toggleInactiveClass: "border-slate-200 bg-white text-slate-500",
+  },
+  {
+    key: "japaneseRomaji",
+    label: "Romaji",
+    chipClass: "text-indigo-700",
+    toggleActiveClass: "border-indigo-300 bg-indigo-50 text-indigo-700",
+    toggleInactiveClass: "border-slate-200 bg-white text-slate-500",
+  },
+  {
+    key: "japanese",
+    label: "Kanji",
+    chipClass: "text-rose-700",
+    toggleActiveClass: "border-rose-300 bg-rose-50 text-rose-700",
+    toggleInactiveClass: "border-slate-200 bg-white text-slate-500",
+  },
+];
+
+const INITIAL_VISIBLE_NAMES = NAME_OPTIONS.reduce(
+  (acc, option) => ({ ...acc, [option.key]: true }),
+  {}
+);
 
 const valueLabels = {
   L: "L",
@@ -454,40 +483,75 @@ const formatValue = (value, isBonus = false) => {
 
 const isLimitValue = (value) => value === "L" || value === "2L";
 
-const formatNames = (names) => {
-  if (!names) {
-    return null;
-  }
-
-  const parts = [names.english, names.japaneseRomaji, names.japanese].filter(
-    (entry, index, array) => entry && array.indexOf(entry) === index
-  );
-
-  if (parts.length === 0) {
-    return null;
-  }
-
-  return parts.join(" / ");
-};
-
 function App() {
   const [showLimits, setShowLimits] = useState(true);
+  const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
+
+  const toggleNameVisibility = (key) => {
+    setVisibleNames((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
+  const renderNameChips = (names) =>
+    NAME_OPTIONS.map((option) => {
+      if (!visibleNames[option.key]) {
+        return null;
+      }
+
+      const value = names?.[option.key];
+      if (!value) {
+        return null;
+      }
+
+      return (
+        <span
+          key={option.key}
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide ${option.chipClass}`}
+        >
+          {value}
+        </span>
+      );
+    }).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-slate-100 py-3">
       <main className="mx-auto flex max-w-5xl flex-col gap-3 px-3 text-slate-900 divide-y divide-slate-300">
-        <div className="flex flex-wrap items-center justify-between gap-3 pb-3">
-          <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none">
-            Riichi Mahjong Hand Reference
-          </h1>
-          <button
-            type="button"
-            onClick={() => setShowLimits((prev) => !prev)}
-            aria-pressed={showLimits}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
-          >
-            {showLimits ? "Hide limit hands" : "Show limit hands"}
-          </button>
+        <div className="flex flex-col gap-3 pb-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none">
+              Riichi Mahjong Hand Reference
+            </h1>
+            <button
+              type="button"
+              onClick={() => setShowLimits((prev) => !prev)}
+              aria-pressed={showLimits}
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
+            >
+              {showLimits ? "Hide limit hands" : "Show limit hands"}
+            </button>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {NAME_OPTIONS.map((option) => {
+              const isActive = visibleNames[option.key];
+              return (
+                <button
+                  key={option.key}
+                  type="button"
+                  aria-pressed={isActive}
+                  onClick={() => toggleNameVisibility(option.key)}
+                  className={`inline-flex items-center rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-wide transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+                    isActive
+                      ? option.toggleActiveClass
+                      : option.toggleInactiveClass
+                  }`}
+                >
+                  {option.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
         {data.map((category) => (
           <section key={category.name} className="flex flex-col gap-2 pb-3">
@@ -526,21 +590,23 @@ function App() {
                   )}
                   <ul className="flex flex-col">
                     {sectionItems.map(({ item, itemKey, visibleVariants }) => {
-                      const namesText = formatNames(item.names);
-                      const notes = [
-                        namesText ? `Also called ${namesText}` : null,
-                        item.description,
-                      ].filter(Boolean);
+                      const nameChips = renderNameChips(item.names);
+                      const notes = [item.description].filter(Boolean);
 
                       return (
                         <li key={itemKey} className="">
                           <div className="flex flex-wrap items-baseline justify-between gap-4">
-                            <div className="flex flex-1 flex-row flex-wrap items-center gap-2">
-                              <span className="text-base font-semibold text-slate-950">
+                            <div className="flex flex-1 flex-row gap-1">
+                              <span className="text-base font-semibold text-slate-950 flex-1">
                                 {item.name}
                               </span>
+                              {nameChips.length > 0 && (
+                                <div className="flex flex-wrap items-center gap-1.5">
+                                  {nameChips}
+                                </div>
+                              )}
                               {notes.length > 0 && (
-                                <span className="text-sm text-slate-600">
+                                <span className="text-xs uppercase tracking-wide text-slate-500">
                                   {notes.join(" • ")}
                                 </span>
                               )}
@@ -555,7 +621,7 @@ function App() {
                             <ul className="flex flex-col pl-1">
                               {visibleVariants.map((variant, variantIndex) => {
                                 const variantKey = `${itemKey}-variant-${variantIndex}`;
-                                const variantNamesText = formatNames(
+                                const variantChips = renderNameChips(
                                   variant.names
                                 );
                                 const variantNotes = [
@@ -563,20 +629,26 @@ function App() {
                                   variant.bonus
                                     ? `Bonus for ${item.name}`
                                     : `Variation of ${item.name}`,
-                                  variantNamesText
-                                    ? `Also called ${variantNamesText}`
-                                    : null,
                                 ].filter(Boolean);
 
                                 return (
-                                  <li
-                                    key={variantKey}
-                                    className="pl-3 text-sm text-slate-700"
-                                  >
+                                  <li key={variantKey} className="pl-3">
                                     <div className="flex flex-wrap items-baseline justify-between gap-3">
-                                      <span className="font-medium italic text-slate-800">
-                                        {variant.name}
-                                      </span>
+                                      <div className="flex flex-1 flex-row gap-1">
+                                        <span className="text-sm font-medium italic text-slate-800">
+                                          {variant.name}
+                                        </span>
+                                        {variantChips.length > 0 && (
+                                          <div className="flex flex-wrap items-center gap-1.5">
+                                            {variantChips}
+                                          </div>
+                                        )}
+                                        {variantNotes.length > 0 && (
+                                          <span className="text-xs text-slate-500">
+                                            {variantNotes.join(" • ")}
+                                          </span>
+                                        )}
+                                      </div>
                                       <span className="text-sm font-semibold text-blue-600">
                                         {formatValue(
                                           variant.value,
@@ -584,11 +656,6 @@ function App() {
                                         )}
                                       </span>
                                     </div>
-                                    {variantNotes.length > 0 && (
-                                      <p className="text-xs text-slate-500">
-                                        {variantNotes.join(" • ")}
-                                      </p>
-                                    )}
                                   </li>
                                 );
                               })}
