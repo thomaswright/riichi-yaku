@@ -8,9 +8,9 @@ const data = [
         name: null,
         items: [
           {
-            name: "Declare riichi",
             value: "1",
             names: {
+              short: "Declare riichi",
               japaneseRomaji: "Riichi",
               japanese: "立直",
               english: "Ready",
@@ -18,9 +18,9 @@ const data = [
             description: null,
             variants: [
               {
-                name: "Win before next discard",
                 value: "1",
                 names: {
+                  short: "Win before next discard",
                   japaneseRomaji: "Ippatsu",
                   japanese: "一発",
                   english: "One-shot",
@@ -29,9 +29,9 @@ const data = [
                 bonus: true,
               },
               {
-                name: "Declare on first turn",
                 value: "1",
                 names: {
+                  short: "Declare on first turn",
                   japaneseRomaji: "Daburu Riichi",
                   japanese: "ダブル立直",
                   english: "Double Ready",
@@ -42,9 +42,9 @@ const data = [
             ],
           },
           {
-            name: "Draw the winning tile",
             value: "1",
             names: {
+              short: "Draw the winning tile",
               japaneseRomaji: "Tsumo",
               japanese: "門前清自摸和",
               english: "Self Draw",
@@ -52,9 +52,9 @@ const data = [
             description: null,
           },
           {
-            name: "Twin runs",
             value: "1",
             names: {
+              short: "Twin runs",
               japaneseRomaji: "Iipeikou",
               japanese: "一盃口",
               english: "Double Straights",
@@ -62,9 +62,9 @@ const data = [
             description: null,
           },
           {
-            name: "Double twin runs",
             value: "3",
             names: {
+              short: "Double twin runs",
               japaneseRomaji: "Ryanpeikou",
               japanese: "二盃口",
               english: "Two Double Straights",
@@ -72,9 +72,9 @@ const data = [
             description: null,
           },
           {
-            name: "Only runs, pair is not honors, outside run wait",
             value: "1",
             names: {
+              short: "Only runs, pair is not honors, outside run wait",
               japaneseRomaji: "Pinfu",
               japanese: "平和",
               english: "No-points",
@@ -82,9 +82,9 @@ const data = [
             description: null,
           },
           {
-            name: "Win on first draw (dealer only)",
             value: "L",
             names: {
+              short: "Win on first draw (dealer only)",
               japaneseRomaji: "Tenhou",
               japanese: "天和",
               english: "Blessing of Heaven",
@@ -92,9 +92,9 @@ const data = [
             description: null,
           },
           {
-            name: "Win on first hand",
             value: "L",
             names: {
+              short: "Win on first hand",
               japaneseRomaji: "Chiihou",
               japanese: "地和",
               english: "Blessing of Earth",
@@ -102,9 +102,9 @@ const data = [
             description: null,
           },
           {
-            name: "Win on call of first turn",
             value: "L",
             names: {
+              short: "Win on call of first turn",
               japaneseRomaji: "Renhou",
               japanese: "人和",
               english: "Blessing of Man",
@@ -122,9 +122,9 @@ const data = [
         name: "Simples & Ends",
         items: [
           {
-            name: "All 2 - 8",
             value: "1",
             names: {
+              short: "All 2 - 8",
               japaneseRomaji: "Tanyao",
               japanese: "断么九",
               english: "All Simples",
@@ -132,9 +132,9 @@ const data = [
             description: null,
           },
           {
-            name: "All contain 1, 9, or honors",
             value: "1",
             names: {
+              short: "All contain 1, 9, or honors",
               japaneseRomaji: "Chanta",
               japanese: "混全帯么九",
               english: "Common Ends",
@@ -142,9 +142,9 @@ const data = [
             description: null,
           },
           {
-            name: "All contain 1 or 9",
             value: "2",
             names: {
+              short: "All contain 1 or 9",
               japaneseRomaji: "Junchan",
               japanese: "純全帯么九",
               english: "Perfect Ends",
@@ -152,9 +152,9 @@ const data = [
             description: null,
           },
           {
-            name: "All 1, 9, or honors",
             value: "2",
             names: {
+              short: "All 1, 9, or honors",
               japaneseRomaji: "Honroutou",
               japanese: "混老頭",
               english: "Common Terminals",
@@ -162,9 +162,9 @@ const data = [
             description: null,
           },
           {
-            name: "All 1 and 9",
             value: "L",
             names: {
+              short: "All 1 and 9",
               japaneseRomaji: "Chinroutou",
               japanese: "清老頭",
               english: "Perfect Terminals",
@@ -172,9 +172,9 @@ const data = [
             description: null,
           },
           {
-            name: "All honors",
             value: "L",
             names: {
+              short: "All honors",
               japaneseRomaji: "Tsuuiisou",
               japanese: "字一色",
               english: "All Honors",
@@ -187,9 +187,9 @@ const data = [
         name: "Sets",
         items: [
           {
-            name: "4 sets",
             value: "2",
             names: {
+              short: "4 sets",
               japaneseRomaji: "Toitoi",
               japanese: "対々和",
               english: "All Triplets",
@@ -197,9 +197,9 @@ const data = [
             description: null,
           },
           {
-            name: "3 concealed sets",
             value: "2",
             names: {
+              short: "3 concealed sets",
               japaneseRomaji: "Sanankou",
               japanese: "三暗刻",
               english: "Three Concealed Triplets",
@@ -207,9 +207,9 @@ const data = [
             description: null,
           },
           {
-            name: "4 concealed sets",
             value: "L",
             names: {
+              short: "4 concealed sets",
               japaneseRomaji: "Suankou",
               japanese: "四暗刻",
               english: null,
@@ -218,9 +218,9 @@ const data = [
             description: null,
           },
           {
-            name: "3 quads",
             value: "2",
             names: {
+              short: "3 quads",
               japaneseRomaji: "Sankantsu",
               japanese: "三槓子",
               english: "Three Quads",
@@ -228,9 +228,9 @@ const data = [
             description: null,
           },
           {
-            name: "4 quads",
             value: "L",
             names: {
+              short: "4 quads",
               japaneseRomaji: "Sukantsu",
               japanese: "四槓子",
               english: "Four Quads",
@@ -243,9 +243,9 @@ const data = [
         name: "Value Honor Sets",
         items: [
           {
-            name: "1 value honor set",
             value: "1",
             names: {
+              short: "1 value honor set",
               japaneseRomaji: "Yakuhai",
               japanese: "役牌",
               english: "Value Triplet",
@@ -253,9 +253,9 @@ const data = [
             description: null,
           },
           {
-            name: "2 sets & pair each dragon",
             value: "2",
             names: {
+              short: "2 sets & pair each dragon",
               english: "Little Dragons",
               japaneseRomaji: "Shousangen",
               japanese: "小三元",
@@ -263,9 +263,9 @@ const data = [
             description: null,
           },
           {
-            name: "3 sets each dragon",
             value: "L",
             names: {
+              short: "3 sets each dragon",
               english: "Big Dragons",
               japaneseRomaji: "Daisangen",
               japanese: "大三元",
@@ -273,9 +273,9 @@ const data = [
             description: null,
           },
           {
-            name: "3 sets & pair each wind",
             value: "L",
             names: {
+              short: "3 sets & pair each wind",
               english: "Little Winds",
               japaneseRomaji: "Shousuushii",
               japanese: "小四喜",
@@ -283,9 +283,9 @@ const data = [
             description: null,
           },
           {
-            name: "4 sets each wind",
             value: "2L",
             names: {
+              short: "4 sets each wind",
               english: "Big Winds",
               japaneseRomaji: "Daisuushii",
               japanese: "大四喜",
@@ -298,9 +298,9 @@ const data = [
         name: "One Suit",
         items: [
           {
-            name: "All one suit or honors",
             value: "2",
             names: {
+              short: "All one suit or honors",
               japaneseRomaji: "Honitsu",
               japanese: "混一色",
               english: "Common Flush",
@@ -308,9 +308,9 @@ const data = [
             description: null,
           },
           {
-            name: "All one suit",
             value: "5",
             names: {
+              short: "All one suit",
               japaneseRomaji: "Chinitsu",
               japanese: "清一色",
               english: "Perfect Flush",
@@ -318,9 +318,9 @@ const data = [
             description: null,
           },
           {
-            name: "All green",
             value: "L",
             names: {
+              short: "All green",
               japaneseRomaji: "Ryuuiisou",
               japanese: "緑一色",
               english: "All Green",
@@ -328,9 +328,9 @@ const data = [
             description: null,
           },
           {
-            name: "11 123 456 789 99 + dup one suit",
             value: "L",
             names: {
+              short: "11 123 456 789 99 + dup one suit",
               english: "Nine Gates",
               japaneseRomaji: "Chuuren Poutou",
               japanese: "九蓮宝燈",
@@ -343,9 +343,9 @@ const data = [
         name: "Other",
         items: [
           {
-            name: "123 456 789 same suit",
             value: "1",
             names: {
+              short: "123 456 789 same suit",
               japaneseRomaji: "Ittsu",
               japanese: "一気通貫",
               english: "Full Straight",
@@ -353,9 +353,9 @@ const data = [
             description: null,
           },
           {
-            name: "Same run each suit",
             value: "1",
             names: {
+              short: "Same run each suit",
               japaneseRomaji: "Sanshoku Doujun",
               japanese: "三色同順",
               english: "Mixed Straights",
@@ -363,9 +363,9 @@ const data = [
             description: null,
           },
           {
-            name: "Same set each suit",
             value: "2",
             names: {
+              short: "Same set each suit",
               japaneseRomaji: "Sanshoku Doukou",
               japanese: "三色同刻",
               english: "Mixed Triplets",
@@ -378,9 +378,9 @@ const data = [
         name: "Special Criteria",
         items: [
           {
-            name: "Last draw",
             value: "1",
             names: {
+              short: "Last draw",
               japaneseRomaji: "Haitei Raoyue",
               japanese: "海底撈月",
               english: "Under the Sea",
@@ -388,9 +388,9 @@ const data = [
             description: null,
           },
           {
-            name: "Call last discard",
             value: "1",
             names: {
+              short: "Call last discard",
               japaneseRomaji: "Houtei Raoyui",
               japanese: "河底撈魚",
               english: "Under the River",
@@ -398,9 +398,9 @@ const data = [
             description: null,
           },
           {
-            name: "Draw after own quad",
             value: "1",
             names: {
+              short: "Draw after own quad",
               japaneseRomaji: "Rinshan Kaihou",
               japanese: "嶺上開花",
               english: "After a Quad",
@@ -408,9 +408,9 @@ const data = [
             description: null,
           },
           {
-            name: "Call another's quad",
             value: "1",
             names: {
+              short: "Call another's quad",
               japaneseRomaji: "Chankan",
               japanese: "搶槓",
               english: "Robbing a Quad",
@@ -418,9 +418,9 @@ const data = [
             description: null,
           },
           {
-            name: "Only 1, 9, and honor discards, none called",
             value: "5",
             names: {
+              short: "Only 1, 9, and honor discards, none called",
               japaneseRomaji: "Nagashi Mangan",
               japanese: "流し満貫",
             },
@@ -437,9 +437,9 @@ const data = [
         name: null,
         items: [
           {
-            name: "7 pairs (closed only)",
             value: "2",
             names: {
+              short: "7 pairs (closed only)",
               japaneseRomaji: "Chiitoitsu",
               japanese: "七対子",
               english: "Seven Pairs",
@@ -447,9 +447,9 @@ const data = [
             description: null,
           },
           {
-            name: "Each 1, 9, wind, and dragon + dup",
             value: "L",
             names: {
+              short: "Each 1, 9, wind, and dragon + dup",
               english: "Thirteen Orphans",
               japaneseRomaji: "Kokushi Musou",
               japanese: "国士無双",
@@ -463,6 +463,13 @@ const data = [
 ];
 
 const NAME_OPTIONS = [
+  {
+    key: "short",
+    label: "Short",
+    chipClass: "text-slate-700",
+    toggleActiveClass: "border-slate-400 bg-slate-100 text-slate-700",
+    toggleInactiveClass: "border-slate-200 bg-white text-slate-500",
+  },
   {
     key: "english",
     label: "English",
@@ -487,7 +494,7 @@ const NAME_OPTIONS = [
 ];
 
 const INITIAL_VISIBLE_NAMES = NAME_OPTIONS.reduce(
-  (acc, option) => ({ ...acc, [option.key]: false }),
+  (acc, option, index) => ({ ...acc, [option.key]: index == 0 }),
   {}
 );
 
@@ -516,7 +523,6 @@ const isLimitValue = (value) => value === "L" || value === "2L";
 function App() {
   const [showLimits, setShowLimits] = useState(true);
   const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
-  const [twoColumn, setTwoColumn] = useState(false);
 
   const toggleNameVisibility = (key) => {
     setVisibleNames((prev) => ({
@@ -539,7 +545,7 @@ function App() {
       return (
         <span
           key={option.key}
-          className={`rounded-full px-1 text-xs font-semibold tracking-wide ${option.chipClass}`}
+          className={`rounded-full px-1 text-xs font-semibold tracking-wide nth-[1]:flex-1 nth-[1]:font-semibold nth-[1]:text-base ${option.chipClass}`}
         >
           {value}
         </span>
@@ -565,7 +571,19 @@ function App() {
                     key={option.key}
                     type="button"
                     aria-pressed={isActive}
-                    onClick={() => toggleNameVisibility(option.key)}
+                    onClick={() => {
+                      setVisibleNames((prev) => {
+                        let numActive = NAME_OPTIONS.filter(
+                          (o) => prev[o.key]
+                        ).length;
+
+                        return {
+                          ...prev,
+                          [option.key]:
+                            numActive > 1 ? !prev[option.key] : true,
+                        };
+                      });
+                    }}
                     className={`inline-flex items-center rounded-full border px-3 
 py-1 text-[10px] font-semibold uppercase tracking-wide transition 
 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
@@ -647,11 +665,8 @@ text-slate-500`}
                           return (
                             <li key={itemKey} className="">
                               <div className="flex flex-wrap items-baseline justify-between gap-4">
-                                <span className="text-base font-semibold text-slate-950 flex-1">
-                                  {item.name}
-                                </span>
                                 {nameChips.length > 0 && (
-                                  <div className="flex flex-wrap items-center gap-1.5">
+                                  <div className="flex flex-wrap items-center gap-1.5 flex-1">
                                     {nameChips}
                                   </div>
                                 )}
@@ -678,11 +693,8 @@ text-slate-500`}
                                       return (
                                         <li key={variantKey} className="pl-3">
                                           <div className="flex flex-wrap items-baseline justify-between gap-3">
-                                            <span className="text-sm flex-1 font-medium italic text-slate-800">
-                                              {variant.name}
-                                            </span>
                                             {variantChips.length > 0 && (
-                                              <div className="flex flex-wrap items-center gap-1.5">
+                                              <div className="flex flex-wrap items-center gap-1.5 flex-1 first:italic">
                                                 {variantChips}
                                               </div>
                                             )}
