@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 const data = [
   {
@@ -521,31 +521,24 @@ const formatValue = (value, isBonus = false) => {
 
 const isLimitValue = (value) => value === "L" || value === "2L";
 
-function App() {
-  const [showLimits, setShowLimits] = useState(true);
-  const [showHan, setShowHan] = useState(true);
+const getNumNamesActive = (options) =>
+  NAME_OPTIONS.filter((option) => options[option.key]).length;
 
-  const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
+const renderNameChips = (names, visibleNames, numNamesActive) => {
+  return NAME_OPTIONS.map((option) => {
+    if (!visibleNames[option.key]) {
+      return null;
+    }
 
-  let getNumNamesActive = (options) =>
-    NAME_OPTIONS.filter((option) => options[option.key]).length;
-  let numNamesActive = getNumNamesActive(visibleNames);
+    const value = names?.[option.key];
+    if (!value) {
+      return null;
+    }
 
-  const renderNameChips = (names) => {
-    return NAME_OPTIONS.map((option) => {
-      if (!visibleNames[option.key]) {
-        return null;
-      }
-
-      const value = names?.[option.key];
-      if (!value) {
-        return null;
-      }
-
-      return (
-        <span
-          key={option.key}
-          className={`rounded-full text-xs font-semibold tracking-wide 
+    return (
+      <span
+        key={option.key}
+        className={`rounded-full text-xs font-semibold tracking-wide 
           nth-[1]:font-semibold nth-[1]:text-sm
           sm:nth-[1]:flex-1 sm:mb-0 sm:mt-0 sm:w-auto
           ${
@@ -554,12 +547,286 @@ function App() {
               : "nth-[1]:flex-1"
           } 
           ${option.chipClass}`}
+      >
+        {value}
+      </span>
+    );
+  }).filter(Boolean);
+};
+
+const NameToggleButton = ({ option, isActive, onToggle }) => (
+  <button
+    type="button"
+    aria-pressed={isActive}
+    onClick={onToggle}
+    className={`inline-flex items-center rounded-full border px-3 
+      py-1 text-[10px] font-semibold uppercase tracking-wide transition 
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+        isActive ? option.toggleActiveClass : option.toggleInactiveClass
+      }`}
+  >
+    {option.label}
+  </button>
+);
+
+const Header = ({
+  visibleNames,
+  onToggleName,
+  showHan,
+  onToggleHan,
+  showLimits,
+  onToggleLimits,
+}) => (
+  <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
+    <div className="flex flex-wrap items-center justify-between gap-3">
+      <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
+        Riichi Mahjong Yaku Reference
+      </h1>
+      <div className="flex flex-wrap items-center gap-2">
+        {NAME_OPTIONS.map((option) => (
+          <NameToggleButton
+            key={option.key}
+            option={option}
+            isActive={visibleNames[option.key]}
+            onToggle={() => onToggleName(option.key)}
+          />
+        ))}
+        <button
+          type="button"
+          onClick={onToggleHan}
+          aria-pressed={showHan}
+          className={`inline-flex items-center rounded-full border px-3 
+            py-1 text-[10px] font-semibold uppercase tracking-wide transition 
+            focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+              showHan
+                ? "border-stone-400 bg-stone-100 text-stone-700"
+                : "border-slate-200 bg-white text-slate-500"
+            }`}
         >
-          {value}
+          {"Han"}
+        </button>
+      </div>
+      <div className=" flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={onToggleLimits}
+          aria-pressed={showLimits}
+          className={`inline-flex items-center rounded-full border border-slate-200 
+          bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500`}
+        >
+          {showLimits ? "Hide limit hands" : "Show limit hands"}
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+const NameChipGroup = ({ names, visibleNames, numNamesActive, className }) => {
+  const chips = renderNameChips(names, visibleNames, numNamesActive);
+  if (chips.length === 0) {
+    return null;
+  }
+
+  return <div className={className}>{chips}</div>;
+};
+
+const VariantItem = ({ variant, showHan, visibleNames, numNamesActive }) => (
+  <li className="pl-3 min-h-6">
+    <div className="flex flex-wrap items-center justify-between gap-1">
+      <NameChipGroup
+        names={variant.names}
+        visibleNames={visibleNames}
+        numNamesActive={numNamesActive}
+        className="flex flex-wrap items-center gap-1.5 flex-1 first:italic"
+      />
+      {showHan && (
+        <span className="text-sm font-semibold text-stone-600 w-4 text-right">
+          {formatValue(variant.value, variant.bonus)}
         </span>
+      )}
+    </div>
+  </li>
+);
+
+const SectionItem = ({
+  item,
+  itemKey,
+  showHan,
+  visibleNames,
+  numNamesActive,
+  visibleVariants,
+}) => (
+  <li className="">
+    <div className="flex flex-wrap items-center justify-between gap-1 min-h-6">
+      <NameChipGroup
+        names={item.names}
+        visibleNames={visibleNames}
+        numNamesActive={numNamesActive}
+        className="flex flex-wrap items-center gap-1.5 flex-1"
+      />
+      {showHan && (
+        <span className="text-base font-semibold text-stone-600  w-4 text-right">
+          {formatValue(item.value)}
+        </span>
+      )}
+    </div>
+
+    {visibleVariants.length > 0 && (
+      <ul className="flex flex-col pl-1">
+        {visibleVariants.map((variant, variantIndex) => (
+          <VariantItem
+            key={`${itemKey}-variant-${variantIndex}`}
+            variant={variant}
+            showHan={showHan}
+            visibleNames={visibleNames}
+            numNamesActive={numNamesActive}
+          />
+        ))}
+      </ul>
+    )}
+  </li>
+);
+
+const CategorySection = ({
+  section,
+  sectionKey,
+  showLimits,
+  showHan,
+  visibleNames,
+  numNamesActive,
+}) => {
+  const sectionItems = section.items.reduce((acc, item, itemIndex) => {
+    if (!showLimits && isLimitValue(item.value)) {
+      return acc;
+    }
+
+    const itemKey = `${sectionKey}-item-${itemIndex}`;
+    const visibleVariants = (item.variants ?? []).filter(
+      (variant) => showLimits || !isLimitValue(variant.value)
+    );
+
+    acc.push({ item, itemKey, visibleVariants });
+    return acc;
+  }, []);
+
+  if (sectionItems.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col gap-1 mb-3">
+      {section.name && (
+        <h3 className={`text-sm font-medium text-slate-400 leading-none`}>
+          {section.name}
+        </h3>
+      )}
+      <ul className="flex flex-col">
+        {sectionItems.map(({ item, itemKey, visibleVariants }) => (
+          <SectionItem
+            key={itemKey}
+            item={item}
+            itemKey={itemKey}
+            showHan={showHan}
+            visibleNames={visibleNames}
+            numNamesActive={numNamesActive}
+            visibleVariants={visibleVariants}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const CategoryBlock = ({
+  category,
+  categoryKey,
+  showLimits,
+  showHan,
+  visibleNames,
+  numNamesActive,
+}) => (
+  <Fragment>
+    <h2 className="text-xs font-semibold text-slate-950 leading-none mb-2 border-t nth-[1]:border-t-0  pt-3 nth-[1]:pt-0 border-slate-300">
+      {category.name}
+    </h2>
+    {category.sections.map((section, sectionIndex) => {
+      const sectionKey = `${categoryKey}-section-${sectionIndex}`;
+      return (
+        <CategorySection
+          key={sectionKey}
+          section={section}
+          sectionKey={sectionKey}
+          showLimits={showLimits}
+          showHan={showHan}
+          visibleNames={visibleNames}
+          numNamesActive={numNamesActive}
+        />
       );
-    }).filter(Boolean);
+    })}
+  </Fragment>
+);
+
+const CategoryList = ({
+  categories,
+  showLimits,
+  showHan,
+  visibleNames,
+  numNamesActive,
+}) => (
+  <div
+    className={`gap-6 ${
+      numNamesActive > 3
+        ? "lg:columns-2"
+        : numNamesActive > 2
+        ? "md:columns-2"
+        : "sm:columns-2"
+    }`}
+    style={{
+      columnRule: "1px solid #e5e7eb",
+    }}
+  >
+    {categories.map((category, categoryIndex) => {
+      const categoryKey = `${category.name ?? "category"}-${categoryIndex}`;
+      return (
+        <CategoryBlock
+          key={categoryKey}
+          category={category}
+          categoryKey={categoryKey}
+          showLimits={showLimits}
+          showHan={showHan}
+          visibleNames={visibleNames}
+          numNamesActive={numNamesActive}
+        />
+      );
+    })}
+  </div>
+);
+
+const Footer = () => (
+  <div className="mt-auto text-slate-500 text-xs  py-3 font-bold">
+    {"By "}
+    <a className=" " href={"https://github.com/thomaswright/riichi-yaku"}>
+      {"Thomas Wright"}
+    </a>
+  </div>
+);
+
+function App() {
+  const [showLimits, setShowLimits] = useState(true);
+  const [showHan, setShowHan] = useState(true);
+  const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
+
+  const numNamesActive = getNumNamesActive(visibleNames);
+
+  const handleToggleName = (key) => {
+    setVisibleNames((prev) => ({
+      ...prev,
+      [key]: getNumNamesActive(prev) > 1 ? !prev[key] : true,
+    }));
   };
+
+  const handleToggleHan = () => setShowHan((prev) => !prev);
+  const handleToggleLimits = () => setShowLimits((prev) => !prev);
 
   return (
     <div
@@ -567,184 +834,22 @@ function App() {
         numNamesActive < 3 ? "max-w-3xl" : "max-w-5xl"
       }`}
     >
-      <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
-            Riichi Mahjong Yaku Reference
-          </h1>
-          <div className="flex flex-wrap items-center gap-2">
-            {NAME_OPTIONS.map((option) => {
-              const isActive = visibleNames[option.key];
-              return (
-                <button
-                  key={option.key}
-                  type="button"
-                  aria-pressed={isActive}
-                  onClick={() => {
-                    setVisibleNames((prev) => {
-                      return {
-                        ...prev,
-                        [option.key]:
-                          getNumNamesActive(prev) > 1
-                            ? !prev[option.key]
-                            : true,
-                      };
-                    });
-                  }}
-                  className={`inline-flex items-center rounded-full border px-3 
-                      py-1 text-[10px] font-semibold uppercase tracking-wide transition 
-                      focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
-                        isActive
-                          ? option.toggleActiveClass
-                          : option.toggleInactiveClass
-                      }`}
-                >
-                  {option.label}
-                </button>
-              );
-            })}
-            <button
-              type="button"
-              onClick={() => setShowHan((prev) => !prev)}
-              aria-pressed={showHan}
-              className={`inline-flex items-center rounded-full border px-3 
-                  py-1 text-[10px] font-semibold uppercase tracking-wide transition 
-                  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
-                    showHan
-                      ? "border-stone-400 bg-stone-100 text-stone-700"
-                      : "border-slate-200 bg-white text-slate-500"
-                  }`}
-            >
-              {"Han"}
-            </button>
-          </div>
-          <div className=" flex flex-wrap items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setShowLimits((prev) => !prev)}
-              aria-pressed={showLimits}
-              className={`inline-flex items-center rounded-full border border-slate-200 
-                bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500`}
-            >
-              {showLimits ? "Hide limit hands" : "Show limit hands"}
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
-        className={`gap-6 ${
-          numNamesActive > 3
-            ? "lg:columns-2"
-            : numNamesActive > 2
-            ? "md:columns-2"
-            : "sm:columns-2"
-        }`}
-        style={{
-          columnRule: "1px solid #e5e7eb",
-        }}
-      >
-        {data.map((category) => (
-          <>
-            <h2 className="text-xs font-semibold text-slate-950 leading-none mb-2 border-t nth-[1]:border-t-0  pt-3 nth-[1]:pt-0 border-slate-300">
-              {category.name}
-            </h2>
-            {category.sections.map((section, sectionIndex) => {
-              const sectionKey = `${category.name}-section-${sectionIndex}`;
-              const sectionItems = section.items.reduce(
-                (acc, item, itemIndex) => {
-                  if (!showLimits && isLimitValue(item.value)) {
-                    return acc;
-                  }
-
-                  const itemKey = `${sectionKey}-item-${itemIndex}`;
-                  const visibleVariants = (item.variants ?? []).filter(
-                    (variant) => showLimits || !isLimitValue(variant.value)
-                  );
-
-                  acc.push({ item, itemKey, visibleVariants });
-                  return acc;
-                },
-                []
-              );
-
-              if (sectionItems.length === 0) {
-                return null;
-              }
-
-              return (
-                <div key={sectionKey} className="flex flex-col gap-1 mb-3">
-                  {section.name && (
-                    <h3
-                      className={`text-sm font-medium text-slate-400 leading-none`}
-                    >
-                      {section.name}
-                    </h3>
-                  )}
-                  <ul className="flex flex-col">
-                    {sectionItems.map(({ item, itemKey, visibleVariants }) => {
-                      const nameChips = renderNameChips(item.names);
-
-                      return (
-                        <li key={itemKey} className="">
-                          <div className="flex flex-wrap items-center justify-between gap-1 min-h-6">
-                            {nameChips.length > 0 && (
-                              <div className="flex flex-wrap items-center gap-1.5 flex-1">
-                                {nameChips}
-                              </div>
-                            )}
-                            {showHan && (
-                              <span className="text-base font-semibold text-stone-600  w-4 text-right">
-                                {formatValue(item.value)}
-                              </span>
-                            )}
-                          </div>
-
-                          {visibleVariants.length > 0 && (
-                            <ul className="flex flex-col pl-1">
-                              {visibleVariants.map((variant, variantIndex) => {
-                                const variantKey = `${itemKey}-variant-${variantIndex}`;
-                                const variantChips = renderNameChips(
-                                  variant.names
-                                );
-
-                                return (
-                                  <li key={variantKey} className="pl-3 min-h-6">
-                                    <div className="flex flex-wrap items-center justify-between gap-1">
-                                      {variantChips.length > 0 && (
-                                        <div className="flex flex-wrap items-center gap-1.5 flex-1 first:italic">
-                                          {variantChips}
-                                        </div>
-                                      )}
-                                      {showHan && (
-                                        <span className="text-sm font-semibold text-stone-600 w-4 text-right">
-                                          {formatValue(
-                                            variant.value,
-                                            variant.bonus
-                                          )}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                            </ul>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
-          </>
-        ))}
-      </div>
-      <div className="mt-auto text-slate-500 text-xs  py-3 font-bold">
-        {"By "}
-        <a className=" " href={"https://github.com/thomaswright/riichi-yaku"}>
-          {"Thomas Wright"}
-        </a>
-      </div>
+      <Header
+        visibleNames={visibleNames}
+        onToggleName={handleToggleName}
+        showHan={showHan}
+        onToggleHan={handleToggleHan}
+        showLimits={showLimits}
+        onToggleLimits={handleToggleLimits}
+      />
+      <CategoryList
+        categories={data}
+        showLimits={showLimits}
+        showHan={showHan}
+        visibleNames={visibleNames}
+        numNamesActive={numNamesActive}
+      />
+      <Footer />
     </div>
   );
 }
