@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const data = [
   {
-    name: "Closed Only Hands",
+    name: "Closed Only",
     sections: [
       {
         name: null,
@@ -31,7 +31,7 @@ const data = [
               {
                 value: "1",
                 names: {
-                  short: "On first turn",
+                  short: "On first hand",
                   japaneseRomaji: "Daburu Riichi",
                   japanese: "ダブル立直",
                   english: "Double Ready",
@@ -44,7 +44,7 @@ const data = [
           {
             value: "1",
             names: {
-              short: "Draw the winning tile",
+              short: "Only Drawing",
               japaneseRomaji: "Tsumo",
               japanese: "門前清自摸和",
               english: "Self Draw",
@@ -84,7 +84,7 @@ const data = [
           {
             value: "L",
             names: {
-              short: "Win on first draw (dealer only)",
+              short: "First draw (dealer only)",
               japaneseRomaji: "Tenhou",
               japanese: "天和",
               english: "Blessing of Heaven",
@@ -94,7 +94,7 @@ const data = [
           {
             value: "L",
             names: {
-              short: "Win on first hand",
+              short: "First hand",
               japaneseRomaji: "Chiihou",
               japanese: "地和",
               english: "Blessing of Earth",
@@ -104,7 +104,7 @@ const data = [
           {
             value: "L",
             names: {
-              short: "Win on call of first turn",
+              short: "Call during first hand",
               japaneseRomaji: "Renhou",
               japanese: "人和",
               english: "Blessing of Man",
@@ -116,7 +116,7 @@ const data = [
     ],
   },
   {
-    name: "Open or Closed Hands",
+    name: "Open or Closed",
     sections: [
       {
         name: "Simples & Ends",
@@ -432,7 +432,7 @@ const data = [
     ],
   },
   {
-    name: "Exception Hands",
+    name: "Non Standard",
     sections: [
       {
         name: null,
@@ -571,7 +571,7 @@ function App() {
         <div className="flex flex-col gap-3 pb-3 border-b border-slate-300">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h1 className="flex-1 text-xs font-semibold tracking-tight text-slate-950 leading-none">
-              Riichi Mahjong Hand Reference
+              Riichi Mahjong Yaku Reference
             </h1>
             <div className="flex flex-wrap items-center gap-2">
               {NAME_OPTIONS.map((option) => {
