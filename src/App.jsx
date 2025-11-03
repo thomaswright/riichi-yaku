@@ -11,7 +11,6 @@ const data = [
             name: "Declare riichi",
             value: "1",
             names: {
-              english: "Riichi",
               japaneseRomaji: "Riichi",
               japanese: "立直",
             },
@@ -21,7 +20,6 @@ const data = [
                 name: "Win before next discard",
                 value: "1",
                 names: {
-                  english: "Ippatsu",
                   japaneseRomaji: "Ippatsu",
                   japanese: "一発",
                 },
@@ -32,7 +30,6 @@ const data = [
                 name: "Declare on first turn",
                 value: "1",
                 names: {
-                  english: "Double riichi",
                   japaneseRomaji: "Daburu Riichi",
                   japanese: "ダブル立直",
                 },
@@ -45,7 +42,6 @@ const data = [
             name: "Draw the winning tile",
             value: "1",
             names: {
-              english: "Menzen Tsumo",
               japaneseRomaji: "Menzen Tsumo",
               japanese: "門前清自摸和",
             },
@@ -417,7 +413,7 @@ const data = [
             description: null,
           },
           {
-            name: "Each terminal, wind, and dragon",
+            name: "Each end, wind, and dragon",
             value: "L",
             names: {
               english: "13 orphans",
@@ -508,7 +504,7 @@ function App() {
       return (
         <span
           key={option.key}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide ${option.chipClass}`}
+          className={`rounded-full px-1 text-xs font-semibold tracking-wide ${option.chipClass}`}
         >
           {value}
         </span>
@@ -596,21 +592,19 @@ function App() {
                       return (
                         <li key={itemKey} className="">
                           <div className="flex flex-wrap items-baseline justify-between gap-4">
-                            <div className="flex flex-1 flex-row gap-1">
-                              <span className="text-base font-semibold text-slate-950 flex-1">
-                                {item.name}
+                            <span className="text-base font-semibold text-slate-950 flex-1">
+                              {item.name}
+                            </span>
+                            {nameChips.length > 0 && (
+                              <div className="flex flex-wrap items-center gap-1.5">
+                                {nameChips}
+                              </div>
+                            )}
+                            {notes.length > 0 && (
+                              <span className="text-xs uppercase tracking-wide text-slate-500">
+                                {notes.join(" • ")}
                               </span>
-                              {nameChips.length > 0 && (
-                                <div className="flex flex-wrap items-center gap-1.5">
-                                  {nameChips}
-                                </div>
-                              )}
-                              {notes.length > 0 && (
-                                <span className="text-xs uppercase tracking-wide text-slate-500">
-                                  {notes.join(" • ")}
-                                </span>
-                              )}
-                            </div>
+                            )}
 
                             <span className="text-base font-semibold text-blue-600">
                               {formatValue(item.value)}
@@ -624,31 +618,18 @@ function App() {
                                 const variantChips = renderNameChips(
                                   variant.names
                                 );
-                                const variantNotes = [
-                                  variant.description,
-                                  variant.bonus
-                                    ? `Bonus for ${item.name}`
-                                    : `Variation of ${item.name}`,
-                                ].filter(Boolean);
 
                                 return (
                                   <li key={variantKey} className="pl-3">
                                     <div className="flex flex-wrap items-baseline justify-between gap-3">
-                                      <div className="flex flex-1 flex-row gap-1">
-                                        <span className="text-sm font-medium italic text-slate-800">
-                                          {variant.name}
-                                        </span>
-                                        {variantChips.length > 0 && (
-                                          <div className="flex flex-wrap items-center gap-1.5">
-                                            {variantChips}
-                                          </div>
-                                        )}
-                                        {variantNotes.length > 0 && (
-                                          <span className="text-xs text-slate-500">
-                                            {variantNotes.join(" • ")}
-                                          </span>
-                                        )}
-                                      </div>
+                                      <span className="text-sm flex-1 font-medium italic text-slate-800">
+                                        {variant.name}
+                                      </span>
+                                      {variantChips.length > 0 && (
+                                        <div className="flex flex-wrap items-center gap-1.5">
+                                          {variantChips}
+                                        </div>
+                                      )}
                                       <span className="text-sm font-semibold text-blue-600">
                                         {formatValue(
                                           variant.value,
