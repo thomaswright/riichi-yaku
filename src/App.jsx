@@ -593,12 +593,12 @@ function App() {
                       });
                     }}
                     className={`inline-flex items-center rounded-full border px-3 
-py-1 text-[10px] font-semibold uppercase tracking-wide transition 
-focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
-                      isActive
-                        ? option.toggleActiveClass
-                        : option.toggleInactiveClass
-                    }`}
+                      py-1 text-[10px] font-semibold uppercase tracking-wide transition 
+                      focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+                        isActive
+                          ? option.toggleActiveClass
+                          : option.toggleInactiveClass
+                      }`}
                   >
                     {option.label}
                   </button>
@@ -609,12 +609,12 @@ focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
                 onClick={() => setShowHan((prev) => !prev)}
                 aria-pressed={showHan}
                 className={`inline-flex items-center rounded-full border px-3 
-py-1 text-[10px] font-semibold uppercase tracking-wide transition 
-focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
-                  showHan
-                    ? "border-stone-400 bg-stone-100 text-stone-700"
-                    : "border-slate-200 bg-white text-slate-500"
-                }`}
+                  py-1 text-[10px] font-semibold uppercase tracking-wide transition 
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
+                    showHan
+                      ? "border-stone-400 bg-stone-100 text-stone-700"
+                      : "border-slate-200 bg-white text-slate-500"
+                  }`}
               >
                 {"Han"}
               </button>
@@ -625,8 +625,7 @@ focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 ${
                 onClick={() => setShowLimits((prev) => !prev)}
                 aria-pressed={showLimits}
                 className={`inline-flex items-center rounded-full border border-slate-200 
-bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wide 
-text-slate-500`}
+                bg-white px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-500`}
               >
                 {showLimits ? "Hide limit hands" : "Show limit hands"}
               </button>
