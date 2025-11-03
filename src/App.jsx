@@ -516,6 +516,7 @@ const isLimitValue = (value) => value === "L" || value === "2L";
 function App() {
   const [showLimits, setShowLimits] = useState(true);
   const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
+  const [twoColumn, setTwoColumn] = useState(false);
 
   const toggleNameVisibility = (key) => {
     setVisibleNames((prev) => ({
@@ -553,14 +554,24 @@ function App() {
             <h1 className="text-xs font-semibold tracking-tight text-slate-950 leading-none">
               Riichi Mahjong Hand Reference
             </h1>
-            <button
-              type="button"
-              onClick={() => setShowLimits((prev) => !prev)}
-              aria-pressed={showLimits}
-              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
-            >
-              {showLimits ? "Hide limit hands" : "Show limit hands"}
-            </button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowLimits((prev) => !prev)}
+                aria-pressed={showLimits}
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
+              >
+                {showLimits ? "Hide limit hands" : "Show limit hands"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setTwoColumn((prev) => !prev)}
+                aria-pressed={twoColumn}
+                className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-700 shadow-sm ring-1 ring-slate-200 transition hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60"
+              >
+                {twoColumn ? "Use single column" : "Use two columns"}
+              </button>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {NAME_OPTIONS.map((option) => {
