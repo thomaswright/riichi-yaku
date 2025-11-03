@@ -527,15 +527,12 @@ function App() {
 
   const [visibleNames, setVisibleNames] = useState(INITIAL_VISIBLE_NAMES);
 
-  const toggleNameVisibility = (key) => {
-    setVisibleNames((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
+  let getNumNamesActive = (options) =>
+    NAME_OPTIONS.filter((option) => options[option.key]).length;
+  let numNamesActive = getNumNamesActive(visibleNames);
 
-  const renderNameChips = (names) =>
-    NAME_OPTIONS.map((option) => {
+  const renderNameChips = (names) => {
+    return NAME_OPTIONS.map((option) => {
       if (!visibleNames[option.key]) {
         return null;
       }
@@ -548,15 +545,21 @@ function App() {
       return (
         <span
           key={option.key}
-          className={`rounded-full text-xs font-semibold tracking-wide nth-[1]:flex-1 nth-[1]:font-semibold nth-[1]:text-sm ${option.chipClass}`}
+          className={`rounded-full text-xs font-semibold tracking-wide 
+          nth-[1]:font-semibold nth-[1]:text-sm
+          sm:nth-[1]:flex-1 sm:mb-0 sm:mt-0 sm:w-auto
+          ${
+            numNamesActive > 2
+              ? "nth-[1]:w-full nth-[1]:flex-none nth-[1]:mb-0 mb-3 -mt-1.5"
+              : "nth-[1]:flex-1"
+          } 
+          ${option.chipClass}`}
         >
           {value}
         </span>
       );
     }).filter(Boolean);
-  let numNamesActive = NAME_OPTIONS.filter(
-    (option) => visibleNames[option.key]
-  ).length;
+  };
 
   return (
     <div className="min-h-screen  py-3">
@@ -580,14 +583,12 @@ function App() {
                     aria-pressed={isActive}
                     onClick={() => {
                       setVisibleNames((prev) => {
-                        let numActive = NAME_OPTIONS.filter(
-                          (o) => prev[o.key]
-                        ).length;
-
                         return {
                           ...prev,
                           [option.key]:
-                            numActive > 1 ? !prev[option.key] : true,
+                            getNumNamesActive(prev) > 1
+                              ? !prev[option.key]
+                              : true,
                         };
                       });
                     }}
